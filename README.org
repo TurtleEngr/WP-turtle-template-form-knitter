@@ -4,13 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-<title>Contact 2 Post</title>
+<title>Turtle Template Form Knitter</title>
 <link rel="stylesheet"
       href="doc.css" />
 </head>
 <body>
 #+END_EXPORT
-* Contact 2 Post
+* Turtle Template Form Knitter
 
 ver-1.4.7
 
@@ -23,21 +23,21 @@ is attached as the post's featured image
 
 1. Install contact-form-7 plugin.
    + Rollback to version 6.1.7, if date fields don't work. For why see
-     issue: https://github.com/TurtleEngr/WP-contact-2-post/issues/1
+     issue: https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues/1
    + Installing "WP Rollback" plugin is the easiest way to rollback
      the plugin.
 2. Install flamingo plugin.
 3. Optional: Install ninja-auto-post-expire plugin
 4. If save-cf7-file-uploads is installed, delete it. It is not
    compatible with this plugin.
-5. Install and activate this plugin: contact-2-post
+5. Install and activate this plugin: turtle-template-form-knitter
 
 *** Development Installs
 
 Some of these are not stable versions.
 
 1. Follow the Installation steps 1 to 4 above.
-2. Go to: https://moria.whyayh.com/rel/released/software/own/WP-contact-2-post
+2. Go to: https://moria.whyayh.com/rel/released/software/own/WP-turtle-template-form-knitter
 3. Then download the contact-2-VER.zip file you want.
 4. In WordPress, install with Upload Plugin.
 
@@ -66,20 +66,20 @@ skip_mail: on
 do_not_store: false
 #+end_example
 
-+ =create_post= - this contact-2-post plugin option. If 'true' that
++ =create_post= - this turtle-template-form-knitter plugin option. If 'true' that
   activates this plugin
 
-+ =post_template= - this contact-2-post plugin option.  This is the
++ =post_template= - this turtle-template-form-knitter plugin option.  This is the
   "slug-name" for a "page" that will be used as a template to generate
   a "Pending" post from a form. See "Template Page" for details.
 
 + =skip_mail= - contact-form-7 plugin option. This has no effect on
-  the contact-2-post plugin, but you can decide if you want to send an
+  the turtle-template-form-knitter plugin, but you can decide if you want to send an
   email of the form, in addition to making a post.
 
 + =do_not_store= - flamingo plugin option. The default is 'false'. If
   it is set to 'true', the form data will not be stored and this
-  contact-2-post plugin will not work.
+  turtle-template-form-knitter plugin will not work.
 
 This plugin does not "publish" the posts, but you should turn on
 reCAPTCHA in contact-form-7 settings so your admin doesn't get spammed
@@ -164,11 +164,11 @@ Image.
 
 ** Examples
 Complete examples can be found at
-<a href="example.html" target="_blank"> Contact 2 Post Examples</a>
+<a href="example.html" target="_blank"> Turtle Template Form Knitter Examples</a>
 
 ** Support
 
-Plugin bugs and documentation bugs can be filed at: [[https://github.com/TurtleEngr/WP-contact-2-post/issues][Issues]] You can
+Plugin bugs and documentation bugs can be filed at: [[https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues][Issues]] You can
 also make Feature Requests there.
 
 ** For Developers
@@ -186,7 +186,7 @@ be reported in a popup, usually a post will not be created. For
 example:
 
 #+begin_example
-Contact 2 Post errors:
+Turtle Template Form Knitter errors:
 - file type not allowed, not saved: photo.exe
 - invalid expire-date: "2026-13-01"
 #+end_example

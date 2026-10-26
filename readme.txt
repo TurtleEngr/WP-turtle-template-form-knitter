@@ -1,4 +1,4 @@
-=== Contact 2 Post ===
+=== Turtle Template Form Knitter ===
 Contributors: TurtleEngr
 Tags: contact, form, post, flamingo, upload
 Requires at least: 6.0
@@ -8,8 +8,7 @@ Stable tag: VERSION
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-When a contact-form-7 form is submitted, this plugin saves uploaded
-images to Media Library, then it creates a post from a template page.
+This plugin knits form fields into templates to generate posts that are almost publication-ready.
 
 == Description ==
 
@@ -42,7 +41,7 @@ Install these plugins in this order.
 
 1. Install contact-form-7 plugin.
 1. Install flamingo plugin.
-1. Install this plugin contact-2-post
+1. Install this plugin turtle-template-form-knitter
 
 If the save-cf7-file-uploads plugin is installed, delete it. That
 functionallity is handled by this plugin.
@@ -54,28 +53,28 @@ In the "Additional Settings" tab for a contact form make sure
 
 = Where can I get more documentation =
 
-See: https://turtleengr.github.io/WP-contact-2-post/
+See: https://turtleengr.github.io/WP-turtle-template-form-knitter/
 
 = How do I configure Contact Form 7 to use this? ==
 
-See: https://turtleengr.github.io/WP-contact-2-post/#contact-form-settings
+See: https://turtleengr.github.io/WP-turtle-template-form-knitter/#contact-form-settings
 
 = How do I define a template for the posts?
 
-See: https://turtleengr.github.io/WP-contact-2-post/#template-page
+See: https://turtleengr.github.io/WP-turtle-template-form-knitter/#template-page
 
 = Where can I report bugs or feature requests? =
 
-See: https://github.com/TurtleEngr/WP-contact-2-post/issues
+See: https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues
 
 = Where can I find newer versions? =
 
 The latest "stable version" can be found at
-https://moria.whyayh.com/rel/released/software/own/WP-contact-2-post/
+https://moria.whyayh.com/rel/released/software/own/WP-turtle-template-form-knitter/
 (or if accepted, at wordpress.org.)
 
 For development versions see:
-https://turtleengr.github.io/WP-contact-2-post/#development-installs
+https://turtleengr.github.io/WP-turtle-template-form-knitter/#development-installs
 
 == Changelog ==
 

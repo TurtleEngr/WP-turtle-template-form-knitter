@@ -7,8 +7,7 @@ ttfk
 ** Prompt 1
 
 + Goal rename the plugin. This includes internal names in all the files.
-
-- For the code at: https://github.com/TurtleEngr/WP-turtle-template-form-knitter
+  For the code at: https://github.com/TurtleEngr/WP-turtle-template-form-knitter
   make the following changes to all the files in that repo.
 
 + Change "contact-2-post" to "turtle-template-form-knitter"
@@ -23,3 +22,33 @@ ttfk
 - Follow the prompts in CLAUDE.org
 
 - Deliver the changed files as downloads.
+
+** Response 1
+- I'll clone the repo, apply the renames and the new description,
+  verify nothing old remains, and send you the changed files.
+
+- Everything uses the exact forms you listed, so a straight text
+  replacement works. Applying it now, plus the two file renames.
+
+- The rename is done: =ttfk-changed-files.zip= has all 19 changed
+  files as complete files, at their repo paths. No old name is left
+  anywhere except one typo noted below. The PHP files pass =php -l=
+  and the JS passes =node --check=.
+
+*** What changed
+- I replaced all three name forms in every file that had them: "Contact 2 Post", "contact-2-post" and =cx2p=. The =WP-…= repo name and the GitHub URI were covered by the "contact-2-post" replacement.
+- =contact-2-post.php= is now =turtle-template-form-knitter.php=.
+- The new description is in the plugin header's =Description:= line.
+- In =readme.txt=, I put the new description in place of the one-line short description under the header block, which is WordPress's equivalent of the header field. I left the longer === Description === section as it was.
+
+*** More Changes
+- Two renames you didn't list, which I made so nothing breaks or mismatches
+- I renamed =js/cx2p-paste.js= to =js/ttfk-paste.js=. Changing the prefix rewrote the references to it in the PHP enqueue code and the Makefile, so the old filename would no longer load.
+- I renamed =spec/prompt-contact-2-post.org= to =spec/prompt-turtle-template-form-knitter.org=, because its title line changed with the text replacement.
+- In git, delete the three old files when you add the new ones.
+
+*** Things to be aware of
+- *Public filter hooks:* =cx2p_should_skip_save_attachment_to_media_library= and =cx2p_before_insert_attachment= are now =ttfk_…=. Any site code that hooks the old names will stop running.
+- *Plugin slug:* the slug is now =turtle-template-form-knitter=, so WordPress will treat this as a new plugin. You'll need to deactivate the old one and activate this one. The ninja-auto-post-expire meta key =_njtape_expiration_date= belongs to that other plugin, so it is unchanged.
+- *Regenerated docs:* I edited =docs/*.html= directly so they match. Running =bin/org2html.sh= again should give the same result.
+- *Typo left alone:* =spec/todo.org= line 53 says =contact-2post=, which isn't one of your patterns. I didn't change it.

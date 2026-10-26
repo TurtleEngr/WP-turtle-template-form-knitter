@@ -1,0 +1,25 @@
+* Fix submission problems
+
+Turtle Template Form Knitter
+turtle-template-form-knitter
+ttfk
+
+** Prompt 1
+
++ Goal rename the plugin. This includes internal names in all the files.
+
+- For the code at: https://github.com/TurtleEngr/WP-turtle-template-form-knitter
+  make the following changes to all the files in that repo.
+
++ Change "contact-2-post" to "turtle-template-form-knitter"
++ Change "Contact 2 Post" to "Turtle Template Form Knitter"
++ Change prefix "cx2p" to "ttfk"
++ Change "WP-contact-2-post" to "WP-turtle-template-form-knitter"
++ Change URI "https://github.com/TurtleEngr/WP-contact-2-post" to "https://github.com/TurtleEngr/WP-turtle-template-form-knitter"
++ Rename "contact-2-post.php" file to "turtle-template-form-knitter.php"
++ Change the Description in readme.txt and turtle-template-form-knitter.php to the following:
+  + "This plugin knits form fields into templates to generate posts that are almost publicaion ready."
+
+- Follow the prompts in CLAUDE.org
+
+- Deliver the changed files as downloads.

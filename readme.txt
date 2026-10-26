@@ -44,7 +44,7 @@ Install these plugins in this order.
 1. Install this plugin turtle-template-form-knitter
 
 If the save-cf7-file-uploads plugin is installed, delete it. That
-functionallity is handled by this plugin.
+functionality is handled by this plugin.
 
 In the "Additional Settings" tab for a contact form make sure
 "do_not_store: true" is not defined.
@@ -93,7 +93,7 @@ https://turtleengr.github.io/WP-turtle-template-form-knitter/#development-instal
 
 - Changed to follow the wordpress.org plugin guidelines.
 
-- Merged in the save-cf7-file-uploads plugin functionallity.
+- Merged in the save-cf7-file-uploads plugin functionality.
   That plugin should not be installed.
 
 - Fixed: uploaded images were not attached to the post (hook name

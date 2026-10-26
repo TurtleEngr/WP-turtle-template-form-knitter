@@ -12,7 +12,7 @@
 #+END_EXPORT
 * Turtle Template Form Knitter
 
-ver-1.4.7
+ver-1.0.0
 
 When a Contact Form 7 form is submitted, this plugin saves the
 uploaded image files to the Media Library. Then this plugin can create

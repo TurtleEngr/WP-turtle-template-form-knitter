@@ -23,7 +23,7 @@
         binary-file-size = 40k
 
 # git-flow doc: https://nvie.com/posts/a-successful-git-branching-model/
-# git-flow is installed, add these
+# Run: git flow init
 [gitflow "branch"]
 	main = main
 	develop = develop

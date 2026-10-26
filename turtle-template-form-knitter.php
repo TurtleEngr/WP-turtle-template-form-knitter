@@ -33,6 +33,9 @@ const ttfk_cAttrEnd = 'ATTR-END';
 // Meta key used by the "ninja-auto-post-expire" plugin. Format: "Y-m-d H:i"
 const ttfk_cExpireMetaKey = '_njtape_expiration_date';
 
+// Attachment meta key: the image sizes still need to be made.
+const ttfk_cNeedMetaKey = '_ttfk_need_meta';
+
 // HTML allowed in textarea values. Only <a> has an attribute (href).
 const ttfk_cHtmlTagList = [
     'h1' => [], 'h2' => [], 'h3' => [], 'h4' => [], 'p' => [],
@@ -68,6 +71,10 @@ add_action('plugins_loaded', function () {
 // Documentation and Support links on the admin Plugins page. Added
 // even when the required plugins are not active.
 add_filter('plugin_row_meta', 'ttfk_fMetaLinks', 10, 2);
+
+// Make image sizes for saved uploads. Added even when the required
+// plugins are not active, so no saved upload is left without them.
+add_action('admin_init', 'ttfk_fMakeAttachMeta');
 
 // ----------------------------------------
 // Add links after the Version and Author in this plugin's row.
@@ -158,8 +165,9 @@ function ttfk_fUniqueFileName($pFilePath)
 
 // ----------------------------------------
 // Copy an uploaded image to the uploads dir and add it to the Media
-// Library. Returns the attachment metadata, or false if the file was
-// not added to the Media Library.
+// Library. Returns the attachment ID, or false if the file was not
+// added to the Media Library. The image sizes are made later, by
+// ttfk_fMakeAttachMeta, the next time an admin page is loaded.
 function ttfk_fCreateAttachment($pFileName)
 {
     // The extension must also be an allowed image type, so a file is
@@ -206,13 +214,32 @@ function ttfk_fCreateAttachment($pFileName)
         wp_delete_file($tAttachFileName);
         return false;
     }
-    require_once(ABSPATH . 'wp-admin/includes/image.php');
-    require_once(ABSPATH . 'wp-admin/includes/media.php');
-    $tAttachData = wp_generate_attachment_metadata($tAttachId, $tAttachFileName);
-    wp_update_attachment_metadata($tAttachId, $tAttachData);
+    add_post_meta($tAttachId, ttfk_cNeedMetaKey, 1, true);
 
     ttfk_fSaveAttachId($tAttachId);
-    return $tAttachData;
+    return $tAttachId;
+}
+
+// ----------------------------------------
+// Make the metadata and image sizes for attachments saved by
+// ttfk_fCreateAttachment. wp_generate_attachment_metadata is only
+// loaded by WordPress for admin requests, so this runs on admin_init.
+function ttfk_fMakeAttachMeta()
+{
+    $tIdList = get_posts([
+        'post_type'   => 'attachment',
+        'post_status' => 'inherit',
+        'meta_key'    => ttfk_cNeedMetaKey,
+        'fields'      => 'ids',
+        'numberposts' => 10,
+    ]);
+    foreach ($tIdList as $tAttachId) {
+        delete_post_meta($tAttachId, ttfk_cNeedMetaKey);
+        $tFile = get_attached_file($tAttachId);
+        if ($tFile && file_exists($tFile)) {
+            wp_update_attachment_metadata($tAttachId, wp_generate_attachment_metadata($tAttachId, $tFile));
+        }
+    }
 }
 
 // ----------------------------------------

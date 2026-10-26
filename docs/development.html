@@ -9,7 +9,8 @@
 </head>
 <body>
   <hr />
-  <h1 id="turtle-template-form-knitter-development">Turtle Template Form Knitter Development</h1>
+  <h1 id="turtle-template-form-knitter-development">Turtle Template Form
+  Knitter Development</h1>
   <p>First fork the <a href=
   "https://turtleengr.github.io/WP-turtle-template-form-knitter/">https://turtleengr.github.io/WP-turtle-template-form-knitter/</a>
   repository.</p>
@@ -198,8 +199,8 @@ mPubRel = /rel/released/$(mProj)
   </ul>
   <hr />
   <h2 id="function-outline">Function Outline</h2>
-  <p>Call tree of the functions in turtle-template-form-knitter.php, in the order they run
-  when a Contact Form 7 form is submitted.</p>
+  <p>Call tree of the functions in turtle-template-form-knitter.php, in the
+  order they run when a Contact Form 7 form is submitted.</p>
   <p>Indent = "calls". Functions without a ttfk_ prefix are WordPress, CF7,
   Flamingo, or PHP functions, listed only where they matter to the flow.</p>
   <p>(recursive) marks a function that calls itself.</p>
@@ -219,6 +220,7 @@ mPubRel = /rel/released/$(mProj)
     <li>add_action wpcf7_enqueue_scripts -&gt; ttfk_fEnqueuePasteScript</li>
   </ul>
   <p>add_filter plugin_row_meta -&gt; ttfk_fMetaLinks (always added)</p>
+  <p>add_action admin_init -&gt; ttfk_fMakeAttachMeta (always added)</p>
   <h3 id="form-page-is-shown-before-submit">1. Form page is shown (before
   submit)</h3>
   <p>wpcf7_enqueue_scripts</p>
@@ -244,7 +246,7 @@ mPubRel = /rel/released/$(mProj)
   <p>apply_filters ttfk_should_skip_save_attachment_to_media_library</p>
   <p>apply_filters ttfk_before_insert_attachment</p>
   <p>wp_insert_attachment (on failure: ttfk_fErrorLog, wp_delete_file)</p>
-  <p>wp_generate_attachment_metadata, wp_update_attachment_metadata</p>
+  <p>add_post_meta _ttfk_need_meta (image sizes are made later, see 3)</p>
   <p>ttfk_fSaveAttachId (stores the ID in a static list)</p>
   <h4>2.2 wpcf7_after_flamingo - create the pending post</h4>
   <p>ttfk_fAfterFlamingo</p>
@@ -344,9 +346,16 @@ mPubRel = /rel/released/$(mProj)
   <ul>
     <li>ttfk_fMakeBlock (core/heading)</li>
   </ul>
-  <h3 id="admin-plugins-page-not-part-of-a-submission">3. Admin Plugins page
-  (not part of a submission)</h3>
-  <p>plugin_row_meta</p>
+  <h3 id="admin-pages-not-part-of-a-submission">3. Admin pages (not part of a
+  submission)</h3>
+  <p>admin_init (any admin page)</p>
+  <ul>
+    <li>ttfk_fMakeAttachMeta (up to 10 attachments per page load)</li>
+  </ul>
+  <p>get_posts (attachments with meta _ttfk_need_meta)</p>
+  <p>delete_post_meta _ttfk_need_meta</p>
+  <p>wp_generate_attachment_metadata, wp_update_attachment_metadata</p>
+  <p>plugin_row_meta (Plugins page)</p>
   <ul>
     <li>ttfk_fMetaLinks (Documentation and Support links)</li>
   </ul>
@@ -386,6 +395,7 @@ mPubRel = /rel/released/$(mProj)
   <p>ttfk_fFeedbackResponse (1)</p>
   <p>ttfk_fEnqueuePasteScript</p>
   <p>ttfk_fMetaLinks</p>
+  <p>ttfk_fMakeAttachMeta</p>
   <h3 id="notes">Notes</h3>
   <p>This outline traces a submission through three hooks, in the order they
   run in the same request:</p>
@@ -404,9 +414,9 @@ mPubRel = /rel/released/$(mProj)
   "verbatim">ttfk_fReplaceFields</code> and the HTML-to-blocks functions;</p>
   <p>a numbered list of every function with its dependencies listed before
   it, so the simplest functions come first.</p>
-  <p>All 28 <code class="verbatim">ttfk_</code> functions in
-  turtle-template-form-knitter.php are reachable from a hook. Three of them call
-  themselves: <code class="verbatim">ttfk_fReplaceInBlock</code>,
+  <p>All 31 <code class="verbatim">ttfk_</code> functions in
+  turtle-template-form-knitter.php are reachable from a hook. Three of them
+  call themselves: <code class="verbatim">ttfk_fReplaceInBlock</code>,
   <code class="verbatim">ttfk_fListBlock</code> and <code class=
   "verbatim">ttfk_fNodeHtml</code>.</p>
   <hr />

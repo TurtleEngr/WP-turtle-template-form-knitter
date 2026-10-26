@@ -175,6 +175,7 @@ mPubRel = /rel/released/$(mProj)
   + add_filter wpcf7_feedback_response -> ttfk_fFeedbackResponse
   + add_action wpcf7_enqueue_scripts  -> ttfk_fEnqueuePasteScript
 - add_filter plugin_row_meta -> ttfk_fMetaLinks (always added)
+- add_action admin_init -> ttfk_fMakeAttachMeta (always added)
 
 *** 1. Form page is shown (before submit)
 - wpcf7_enqueue_scripts
@@ -197,7 +198,7 @@ mPubRel = /rel/released/$(mProj)
     - apply_filters ttfk_before_insert_attachment
     - wp_insert_attachment
       (on failure: ttfk_fErrorLog, wp_delete_file)
-    - wp_generate_attachment_metadata, wp_update_attachment_metadata
+    - add_post_meta _ttfk_need_meta  (image sizes are made later, see 3)
     - ttfk_fSaveAttachId  (stores the ID in a static list)
 
 **** 2.2 wpcf7_after_flamingo - create the pending post
@@ -273,9 +274,14 @@ mPubRel = /rel/released/$(mProj)
     - ttfk_fMakeBlock  (core/list-item, core/list)
   + ttfk_fMakeBlock  (core/heading)
 
-*** 3. Admin Plugins page (not part of a submission)
+*** 3. Admin pages (not part of a submission)
 
-- plugin_row_meta
+- admin_init  (any admin page)
+  + ttfk_fMakeAttachMeta  (up to 10 attachments per page load)
+    - get_posts  (attachments with meta _ttfk_need_meta)
+    - delete_post_meta _ttfk_need_meta
+    - wp_generate_attachment_metadata, wp_update_attachment_metadata
+- plugin_row_meta  (Plugins page)
   + ttfk_fMetaLinks  (Documentation and Support links)
 
 *** 4. Dependency order (leaves first)
@@ -313,6 +319,7 @@ mPubRel = /rel/released/$(mProj)
     - ttfk_fFeedbackResponse  (1)
     - ttfk_fEnqueuePasteScript
     - ttfk_fMetaLinks
+    - ttfk_fMakeAttachMeta
 
 *** Notes
 
@@ -333,7 +340,7 @@ The outline also has:
 - a numbered list of every function with its dependencies listed
   before it, so the simplest functions come first.
 
-All 28 =ttfk_= functions in turtle-template-form-knitter.php are reachable from a
+All 31 =ttfk_= functions in turtle-template-form-knitter.php are reachable from a
 hook. Three of them call themselves: =ttfk_fReplaceInBlock=,
 =ttfk_fListBlock= and =ttfk_fNodeHtml=.
 

@@ -131,3 +131,9 @@ reviewer and keep the simpler original code.
   setup. It's a test script, not in the zip, but it will fail as it
   stands.
 
+** Prompt 3
++ I updated the alert text in js/ttfk-paste.js and re-installed the
+  plugin, but the old text is output. Why?
+
++ The code is at:
+  https://github.com/TurtleEngr/WP-turtle-template-form-knitter/tree/feature/rename

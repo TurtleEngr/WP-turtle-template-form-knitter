@@ -224,7 +224,7 @@ post_template: template-post
 
 *** Template Page
 Create a page named: template-post
-##+begin_example
+#+begin_example
 ATTR-BEGIN
 title: {your-subject}
 categories: {category-1}

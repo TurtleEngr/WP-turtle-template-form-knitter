@@ -204,5 +204,5 @@ docs/development.html : development.org
 
 docs/example.html : example.org
 	bin/rm-trailing-sp $?
-	bin/org2html.sh -i $? -o $@ -s 2
+	bin/org2html.sh -i $? -o $@ -s 3
 	sed -i 's/\&amp;/\&/g' $@

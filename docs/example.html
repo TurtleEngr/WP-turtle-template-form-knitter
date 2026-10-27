@@ -13,6 +13,7 @@
   Examples</h1>
   <hr />
   <h2 id="add-post">Add Post</h2>
+  <hr />
   <h3 id="contact">Contact</h3>
   <p>Create contact form: add-post</p>
   <h4>Form tab</h4>
@@ -215,22 +216,39 @@ create_post: true
 do_not_store: false
 post_template: template-post
 </code></pre>
+  <hr />
   <h3 id="template-page">Template Page</h3>
-  <p>Create a page named: template-post ##+begin_example ATTR-BEGIN title:
-  <cite>{your-subject}</cite> categories: <cite>{category-1}</cite> tags:
-  <cite>{tags-1}</cite> publish-date: <cite>{pub-date-1}</cite> ATTR-END</p>
-  <p><cite>{subtitle-1}</cite></p>
-  <p>By: <cite>{Author-1}</cite> and <cite>{Authors-1}</cite> Publisher:
-  <cite>{publisher-1}</cite> Recommended by: <cite>{your-name}</cite></p>
-  <p><cite>{summary-1}</cite></p>
-  <p>Buy/View: <cite>{main-url-1}</cite></p>
-  <p>Notes</p>
-  <p>For details, see the Contact form add-post and <a href=
-  "https://github.com/TurtleEngr/WP-turtle-template-form-knitter">https://github.com/TurtleEngr/WP-turtle-template-form-knitter</a></p>
-  <p>Name: <cite>{your-name}</cite> Email: <cite>{your-email}</cite>
-  Featured: <cite>{featured-1}</cite> Alt Image URL:
-  <cite>{image-url-1}</cite></p>
-  <p>Note: <cite>{notes-1}</cite></p>
+  <p>Create a page named: template-post</p>
+  <pre class="example"><code>ATTR-BEGIN
+title: <cite>{your-subject}</cite>
+categories: <cite>{category-1}</cite>
+tags: <cite>{tags-1}</cite>
+publish-date: <cite>{pub-date-1}</cite>
+ATTR-END
+
+<cite>{subtitle-1}</cite>
+
+By: <cite>{Author-1}</cite> and <cite>{Authors-1}</cite>
+Publisher: <cite>{publisher-1}</cite>
+Recommended by: <cite>{your-name}</cite>
+
+<cite>{summary-1}</cite>
+
+Buy/View: <cite>{main-url-1}</cite>
+
+Notes
+
+For details, see the Contact form add-post and
+https://github.com/TurtleEngr/WP-turtle-template-form-knitter
+
+Name: <cite>{your-name}</cite>
+Email: <cite>{your-email}</cite>
+Featured: <cite>{featured-1}</cite>
+Alt Image URL: <cite>{image-url-1}</cite>
+
+Note: <cite>{notes-1}</cite>
+</code></pre>
+  <hr />
   <h3 id="contact-form-page">Contact Form Page</h3>
   <p>Create a page named: Add a Post Form</p>
   <pre class=
@@ -247,6 +265,7 @@ For general questions, see the "Contact US" Form.
 
 [Contact Form 7: add-post]
 </code></pre>
+  <hr />
   <h3 id="note">Note</h3>
   <p>If you have defined the publish-date, when you look at the generated
   post, its publish date it might show "immediately" which looks like it
@@ -254,6 +273,7 @@ For general questions, see the "Contact US" Form.
   see if the date has been correctly set.</p>
   <hr />
   <h2 id="add-event">Add Event</h2>
+  <hr />
   <h3 id="contact-1">Contact</h3>
   <p>Create contact form: add-event</p>
   <h4>Form tab</h4>
@@ -454,6 +474,7 @@ create_post: true
 do_not_store: false
 post_template: template-event
 </code></pre>
+  <hr />
   <h3 id="template-page-1">Template Page</h3>
   <p>Create a page named: template-event</p>
   <pre class="example"><code>ATTR-BEGIN
@@ -486,6 +507,7 @@ Alt Image URL: <cite>{image-url-1}</cite>
 
 Note: <cite>{event-notes-1}</cite>
 </code></pre>
+  <hr />
   <h3 id="contact-form-page-1">Contact Form Page</h3>
   <p>Create a page named: Add An Event Form</p>
   <pre class=
@@ -502,6 +524,7 @@ For general questions, use the "General Contact" Form.
 
 [Contact Form 7: add-event]
 </code></pre>
+  <hr />
   <h3 id="note-1">Note</h3>
   <p>The publish date will be "now" when you publish the event post.</p>
 </body>

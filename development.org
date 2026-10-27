@@ -4,15 +4,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-<title>Contact 2 Post Development</title>
+<title>Turtle Template Form Knitter Development</title>
 <link rel="stylesheet"
       href="doc.css" />
 </head>
 <body>
 #+END_EXPORT
-* Contact 2 Post Development
+* Turtle Template Form Knitter Development
 
-- First fork the https://turtleengr.github.io/WP-contact-2-post/
+- First fork the https://turtleengr.github.io/WP-turtle-template-form-knitter/
   repository.
 
 ** Requirements for building
@@ -38,7 +38,7 @@
   + =bin/rm-trailing-sp= - an convert tabs to spaces
   + =bin/pre-commit= - enforces some basic formatting (see [gitproj "hook"])
 
-- Copy =bin/pre-commit= to =WP-contact-2-post/.git/hooks=
+- Copy =bin/pre-commit= to =WP-turtle-template-form-knitter/.git/hooks=
 
 *** git config
 + Append contents of =./bin/gitconfig= to =./.git/config=
@@ -126,13 +126,13 @@ mPubRel = /rel/released/$(mProj)
   If there is no valid publish-date, the post date "floats": it is
   set when the post is published.
 
-+ =cx2p_fOnBeforeCf7SendMail()= is hooked to
++ =ttfk_fOnBeforeCf7SendMail()= is hooked to
   =wpcf7_before_send_mail=. It saves each uploaded image with
-  =cx2p_fCreateAttachment()=, and collects the attachment IDs with
-  =cx2p_fSaveAttachId()=.
+  =ttfk_fCreateAttachment()=, and collects the attachment IDs with
+  =ttfk_fSaveAttachId()=.
 
-+ Upload error messages are saved with =cx2p_fErrorLog()=, which also
-  writes them to the PHP error log. Calling =cx2p_fErrorLog()= with no
++ Upload error messages are saved with =ttfk_fErrorLog()=, which also
+  writes them to the PHP error log. Calling =ttfk_fErrorLog()= with no
   argument returns the list. The list is a =static= variable, and
   each form submission is one PHP request with its own memory, so a
   post only gets the errors from its own submission, even when
@@ -140,9 +140,9 @@ mPubRel = /rel/released/$(mProj)
   after the request ends; the PHP error log still has them.
 
 + These filters can change how uploads are saved:
-  =cx2p_fCreateAttachment_file_name= (the destination path),
-  =cx2p_should_skip_save_attachment_to_media_library= (return true to
-  only copy the file), and =cx2p_before_insert_attachment= (the
+  =ttfk_fCreateAttachment_file_name= (the destination path),
+  =ttfk_should_skip_save_attachment_to_media_library= (return true to
+  only copy the file), and =ttfk_before_insert_attachment= (the
   attachment array).
 
 + Flamingo saves the message in =wpcf7_submit=, then fires
@@ -158,9 +158,9 @@ mPubRel = /rel/released/$(mProj)
   block comment JSON), then =serialize_blocks()=.
 
 ** Function Outline
-- Call tree of the functions in contact-2-post.php, in the order they
+- Call tree of the functions in turtle-template-form-knitter.php, in the order they
   run when a Contact Form 7 form is submitted.
-- Indent = "calls". Functions without a cx2p_ prefix are WordPress,
+- Indent = "calls". Functions without a ttfk_ prefix are WordPress,
   CF7, Flamingo, or PHP functions, listed only where they matter to
   the flow.
 - (recursive) marks a function that calls itself.
@@ -170,149 +170,156 @@ mPubRel = /rel/released/$(mProj)
 - plugins_loaded (anonymous function)
   + If WPCF7 or Flamingo_Inbound_Message is missing:
     - add_action admin_notices -> error notice; no hooks below are added.
-  + add_action wpcf7_before_send_mail -> cx2p_fOnBeforeCf7SendMail
-  + add_action wpcf7_after_flamingo   -> cx2p_fAfterFlamingo
-  + add_filter wpcf7_feedback_response -> cx2p_fFeedbackResponse
-  + add_action wpcf7_enqueue_scripts  -> cx2p_fEnqueuePasteScript
-- add_filter plugin_row_meta -> cx2p_fMetaLinks (always added)
+  + add_action wpcf7_before_send_mail -> ttfk_fOnBeforeCf7SendMail
+  + add_action wpcf7_after_flamingo   -> ttfk_fAfterFlamingo
+  + add_filter wpcf7_feedback_response -> ttfk_fFeedbackResponse
+  + add_action wpcf7_enqueue_scripts  -> ttfk_fEnqueuePasteScript
+- add_filter plugin_row_meta -> ttfk_fMetaLinks (always added)
+- add_action admin_init -> ttfk_fMakeAttachMeta (always added)
 
 *** 1. Form page is shown (before submit)
 - wpcf7_enqueue_scripts
-  + cx2p_fEnqueuePasteScript
-    - wp_enqueue_script js/cx2p-paste.js
-      (cleans pasted HTML in textareas; shows cx2p_errors popup)
+  + ttfk_fEnqueuePasteScript
+    - wp_enqueue_script js/ttfk-paste.js
+      (cleans pasted HTML in textareas; shows ttfk_errors popup)
 
 *** 2. Form is submitted (one request, hooks fire in this order)
 **** 2.1 wpcf7_before_send_mail - save uploaded images
-- cx2p_fOnBeforeCf7SendMail
+- ttfk_fOnBeforeCf7SendMail
   + WPCF7_Submission::get_instance()->uploaded_files()
-  + cx2p_fCreateAttachment  (once per uploaded file)
+  + ttfk_fCreateAttachment  (once per uploaded file)
     - wp_check_filetype, wp_get_image_mime  (image checks)
-    - cx2p_fErrorLog  (on any failure)
-    - cx2p_fNormalizeFileName
-    - apply_filters cx2p_fCreateAttachment_file_name
-    - cx2p_fUniqueFileName
+    - ttfk_fErrorLog  (on any failure)
+    - ttfk_fNormalizeFileName
+    - apply_filters ttfk_fCreateAttachment_file_name
+    - ttfk_fUniqueFileName
     - copy() to uploads dir
-    - apply_filters cx2p_should_skip_save_attachment_to_media_library
-    - apply_filters cx2p_before_insert_attachment
+    - apply_filters ttfk_should_skip_save_attachment_to_media_library
+    - apply_filters ttfk_before_insert_attachment
     - wp_insert_attachment
-      (on failure: cx2p_fErrorLog, wp_delete_file)
-    - wp_generate_attachment_metadata, wp_update_attachment_metadata
-    - cx2p_fSaveAttachId  (stores the ID in a static list)
+      (on failure: ttfk_fErrorLog, wp_delete_file)
+    - add_post_meta _ttfk_need_meta  (image sizes are made later, see 3)
+    - ttfk_fSaveAttachId  (stores the ID in a static list)
 
 **** 2.2 wpcf7_after_flamingo - create the pending post
 
-- cx2p_fAfterFlamingo
+- ttfk_fAfterFlamingo
   + Return early if: no Flamingo/form ID, spam, or form option
     create_post is not true.
   + Get template page from form option post_template
-    - cx2p_fErrorLog  (not set / page not found)
+    - ttfk_fErrorLog  (not set / page not found)
   + new Flamingo_Inbound_Message -> fields
   + Build HTML field list from textarea form tags
-  + cx2p_fSaveAttachId()  (read the IDs saved in 2.1)
-  + cx2p_fCreatePost
+  + ttfk_fSaveAttachId()  (read the IDs saved in 2.1)
+  + ttfk_fCreatePost
     - parse_blocks(template)
     - for each top-level block:
-      + cx2p_fGetAttrLines  (ATTR-BEGIN ... ATTR-END lines)
-        - cx2p_fReplaceFields  (plain text, see 2.4)
-      + cx2p_fReplaceInBlock  (recursive, for innerBlocks)
-        - cx2p_fSplitParagraph  (core/paragraph only)
-          + cx2p_fBlockHtmlValue
-            - cx2p_fValueToString
-            - cx2p_fCleanHtml
-          + cx2p_fTextBlock
-            - cx2p_fReplaceFields  (HTML, see 2.4)
-          + cx2p_fHtmlToBlocks  (see 2.5)
-        - cx2p_fReplaceFields  (HTML, see 2.4)
-        - cx2p_fReplaceInBlock  (each inner block)
-    - cx2p_fErrorLog  (ATTR-END not found)
-    - cx2p_fGetAdminId  (post author)
+      + ttfk_fGetAttrLines  (ATTR-BEGIN ... ATTR-END lines)
+        - ttfk_fReplaceFields  (plain text, see 2.4)
+      + ttfk_fReplaceInBlock  (recursive, for innerBlocks)
+        - ttfk_fSplitParagraph  (core/paragraph only)
+          + ttfk_fBlockHtmlValue
+            - ttfk_fValueToString
+            - ttfk_fCleanHtml
+          + ttfk_fTextBlock
+            - ttfk_fReplaceFields  (HTML, see 2.4)
+          + ttfk_fHtmlToBlocks  (see 2.5)
+        - ttfk_fReplaceFields  (HTML, see 2.4)
+        - ttfk_fReplaceInBlock  (each inner block)
+    - ttfk_fErrorLog  (ATTR-END not found)
+    - ttfk_fGetAdminId  (post author)
     - serialize_blocks
-    - cx2p_fParseDate  (publish-date)
+    - ttfk_fParseDate  (publish-date)
     - wp_insert_post  (status pending)
-      (on failure: cx2p_fErrorLog)
-    - cx2p_fGetTermIdList  (categories, then tags)
+      (on failure: ttfk_fErrorLog)
+    - ttfk_fGetTermIdList  (categories, then tags)
       + wp_set_object_terms
-    - cx2p_fParseDate, cx2p_fParseTime  (expire-date, expire-time)
+    - ttfk_fParseDate, ttfk_fParseTime  (expire-date, expire-time)
       + update_post_meta _njtape_expiration_date
-      + cx2p_fErrorLog  (invalid expire-date)
+      + ttfk_fErrorLog  (invalid expire-date)
     - for each saved attachment ID:
       + wp_update_post  (post_parent = new post)
       + set_post_thumbnail  (first image only)
 
 **** 2.3 wpcf7_feedback_response - report errors to the browser
 
-- cx2p_fFeedbackResponse
-  + cx2p_fErrorLog()  (read the list saved during 2.1 and 2.2)
-  + Adds cx2p_errors to the JSON reply (shown by js/cx2p-paste.js)
+- ttfk_fFeedbackResponse
+  + ttfk_fErrorLog()  (read the list saved during 2.1 and 2.2)
+  + Adds ttfk_errors to the JSON reply (shown by js/ttfk-paste.js)
 
-**** 2.4 Shared: cx2p_fReplaceFields
+**** 2.4 Shared: ttfk_fReplaceFields
 
-- cx2p_fReplaceFields  ({field} -> value, single pass)
-  + cx2p_fValueToString
+- ttfk_fReplaceFields  ({field} -> value, single pass)
+  + ttfk_fValueToString
   + if plain text: return value
   + if HTML:
-    - cx2p_fCleanHtml  (only for textarea fields)
+    - ttfk_fCleanHtml  (only for textarea fields)
     - no tags: esc_html, nl2br, encode [ ]
     - has tags:
-      + cx2p_fLoadHtml
-      + cx2p_fNodeHtml  (see 2.5)
+      + ttfk_fLoadHtml
+      + ttfk_fNodeHtml  (see 2.5)
 
 **** 2.5 Shared: HTML -> blocks helpers
 
-- cx2p_fHtmlToBlocks
-  + cx2p_fLoadHtml
-  + cx2p_fNodeHtml  (recursive)
-    - cx2p_fTidyInline
-  + cx2p_fTidyInline
-  + cx2p_fParagraphBlock
-    - cx2p_fMakeBlock
-  + cx2p_fListBlock  (recursive, nested ul/ol)
-    - cx2p_fNodeHtml
-    - cx2p_fTidyInline
-    - cx2p_fMakeBlock  (core/list-item, core/list)
-  + cx2p_fMakeBlock  (core/heading)
+- ttfk_fHtmlToBlocks
+  + ttfk_fLoadHtml
+  + ttfk_fNodeHtml  (recursive)
+    - ttfk_fTidyInline
+  + ttfk_fTidyInline
+  + ttfk_fParagraphBlock
+    - ttfk_fMakeBlock
+  + ttfk_fListBlock  (recursive, nested ul/ol)
+    - ttfk_fNodeHtml
+    - ttfk_fTidyInline
+    - ttfk_fMakeBlock  (core/list-item, core/list)
+  + ttfk_fMakeBlock  (core/heading)
 
-*** 3. Admin Plugins page (not part of a submission)
+*** 3. Admin pages (not part of a submission)
 
-- plugin_row_meta
-  + cx2p_fMetaLinks  (Documentation and Support links)
+- admin_init  (any admin page)
+  + ttfk_fMakeAttachMeta  (up to 10 attachments per page load)
+    - get_posts  (attachments with meta _ttfk_need_meta)
+    - delete_post_meta _ttfk_need_meta
+    - wp_generate_attachment_metadata, wp_update_attachment_metadata
+- plugin_row_meta  (Plugins page)
+  + ttfk_fMetaLinks  (Documentation and Support links)
 
 *** 4. Dependency order (leaves first)
 
 - Each function only depends on functions above it in this list.
 
-1. cx2p_fErrorLog
-2. cx2p_fSaveAttachId
-3. cx2p_fValueToString
-4. cx2p_fNormalizeFileName
-5. cx2p_fUniqueFileName
-6. cx2p_fParseDate
-7. cx2p_fParseTime
-8. cx2p_fGetAdminId
-9. cx2p_fGetTermIdList
-10. cx2p_fCleanHtml
-11. cx2p_fTidyInline
-12. cx2p_fLoadHtml
-13. cx2p_fMakeBlock
-14. cx2p_fNodeHtml  (self)
-15. cx2p_fParagraphBlock  (13)
-16. cx2p_fListBlock  (self, 11, 13, 14)
-17. cx2p_fHtmlToBlocks  (11-16)
-18. cx2p_fReplaceFields  (3, 10, 12, 14)
-19. cx2p_fBlockHtmlValue  (3, 10)
-20. cx2p_fTextBlock  (18)
-21. cx2p_fSplitParagraph  (17, 19, 20)
-22. cx2p_fReplaceInBlock  (self, 18, 21)
-23. cx2p_fGetAttrLines  (18)
-24. cx2p_fCreateAttachment  (1, 2, 4, 5)
-25. cx2p_fCreatePost  (1, 6-9, 22, 23)
+1. ttfk_fErrorLog
+2. ttfk_fSaveAttachId
+3. ttfk_fValueToString
+4. ttfk_fNormalizeFileName
+5. ttfk_fUniqueFileName
+6. ttfk_fParseDate
+7. ttfk_fParseTime
+8. ttfk_fGetAdminId
+9. ttfk_fGetTermIdList
+10. ttfk_fCleanHtml
+11. ttfk_fTidyInline
+12. ttfk_fLoadHtml
+13. ttfk_fMakeBlock
+14. ttfk_fNodeHtml  (self)
+15. ttfk_fParagraphBlock  (13)
+16. ttfk_fListBlock  (self, 11, 13, 14)
+17. ttfk_fHtmlToBlocks  (11-16)
+18. ttfk_fReplaceFields  (3, 10, 12, 14)
+19. ttfk_fBlockHtmlValue  (3, 10)
+20. ttfk_fTextBlock  (18)
+21. ttfk_fSplitParagraph  (17, 19, 20)
+22. ttfk_fReplaceInBlock  (self, 18, 21)
+23. ttfk_fGetAttrLines  (18)
+24. ttfk_fCreateAttachment  (1, 2, 4, 5)
+25. ttfk_fCreatePost  (1, 6-9, 22, 23)
 26. Hook entry points:
-    - cx2p_fOnBeforeCf7SendMail  (24)
-    - cx2p_fAfterFlamingo  (1, 2, 25)
-    - cx2p_fFeedbackResponse  (1)
-    - cx2p_fEnqueuePasteScript
-    - cx2p_fMetaLinks
+    - ttfk_fOnBeforeCf7SendMail  (24)
+    - ttfk_fAfterFlamingo  (1, 2, 25)
+    - ttfk_fFeedbackResponse  (1)
+    - ttfk_fEnqueuePasteScript
+    - ttfk_fMetaLinks
+    - ttfk_fMakeAttachMeta
 
 *** Notes
 
@@ -328,14 +335,14 @@ they run in the same request:
 The outline also has:
 - a short setup section (=plugins_loaded=, plus the script loaded when
   the form page is shown);
-- separate sections for the two shared helpers, =cx2p_fReplaceFields=
+- separate sections for the two shared helpers, =ttfk_fReplaceFields=
   and the HTML-to-blocks functions;
 - a numbered list of every function with its dependencies listed
   before it, so the simplest functions come first.
 
-All 28 =cx2p_= functions in contact-2-post.php are reachable from a
-hook. Three of them call themselves: =cx2p_fReplaceInBlock=,
-=cx2p_fListBlock= and =cx2p_fNodeHtml=.
+All 31 =ttfk_= functions in turtle-template-form-knitter.php are reachable from a
+hook. Three of them call themselves: =ttfk_fReplaceInBlock=,
+=ttfk_fListBlock= and =ttfk_fNodeHtml=.
 
 ** Test
 - test/setup.php and test/submit.php are run with wp-cli on a test

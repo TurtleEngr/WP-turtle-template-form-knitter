@@ -4,13 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-<title>Contact 2 Post Examples</title>
+<title>Turtle Template Form Knitter Examples</title>
 <link rel="stylesheet"
       href="doc.css" />
 </head>
 <body>
 #+END_EXPORT
-* Contact 2 Post Examples
+* Turtle Template Form Knitter Examples
 ** Add Post
 *** Contact
 Create contact form: add-post
@@ -245,7 +245,7 @@ Buy/View: {main-url-1}
 Notes
 
 For details, see the Contact form add-post and
-https://github.com/TurtleEngr/WP-contact-2-post
+https://github.com/TurtleEngr/WP-turtle-template-form-knitter
 
 Name: {your-name}
 Email: {your-email}
@@ -510,7 +510,7 @@ Event URL: {event-url-1}
 Notes
 
 For details, see the Contact form add-event and
-https://github.com/TurtleEngr/WP-contact-2-post
+https://github.com/TurtleEngr/WP-turtle-template-form-knitter
 
 Name: {your-name}
 Email: {your-email}

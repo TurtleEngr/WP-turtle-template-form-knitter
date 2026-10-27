@@ -7,8 +7,7 @@ ttfk
 ** Prompt 1
 
 + Goal rename the plugin. This includes internal names in all the files.
-
-- For the code at: https://github.com/TurtleEngr/WP-turtle-template-form-knitter
+  For the code at: https://github.com/TurtleEngr/WP-turtle-template-form-knitter
   make the following changes to all the files in that repo.
 
 + Change "contact-2-post" to "turtle-template-form-knitter"
@@ -23,3 +22,118 @@ ttfk
 - Follow the prompts in CLAUDE.org
 
 - Deliver the changed files as downloads.
+
+** Response 1
+- I'll clone the repo, apply the renames and the new description,
+  verify nothing old remains, and send you the changed files.
+
+- Everything uses the exact forms you listed, so a straight text
+  replacement works. Applying it now, plus the two file renames.
+
+- The rename is done: =ttfk-changed-files.zip= has all 19 changed
+  files as complete files, at their repo paths. No old name is left
+  anywhere except one typo noted below. The PHP files pass =php -l=
+  and the JS passes =node --check=.
+
+*** What changed
+- I replaced all three name forms in every file that had them: "Contact 2 Post", "contact-2-post" and =cx2p=. The =WP-…= repo name and the GitHub URI were covered by the "contact-2-post" replacement.
+- =contact-2-post.php= is now =turtle-template-form-knitter.php=.
+- The new description is in the plugin header's =Description:= line.
+- In =readme.txt=, I put the new description in place of the one-line short description under the header block, which is WordPress's equivalent of the header field. I left the longer === Description === section as it was.
+
+*** More Changes
+- Two renames you didn't list, which I made so nothing breaks or mismatches
+- I renamed =js/cx2p-paste.js= to =js/ttfk-paste.js=. Changing the prefix rewrote the references to it in the PHP enqueue code and the Makefile, so the old filename would no longer load.
+- I renamed =spec/prompt-contact-2-post.org= to =spec/prompt-turtle-template-form-knitter.org=, because its title line changed with the text replacement.
+- In git, delete the three old files when you add the new ones.
+
+*** Things to be aware of
+- *Public filter hooks:* =cx2p_should_skip_save_attachment_to_media_library= and =cx2p_before_insert_attachment= are now =ttfk_…=. Any site code that hooks the old names will stop running.
+- *Plugin slug:* the slug is now =turtle-template-form-knitter=, so WordPress will treat this as a new plugin. You'll need to deactivate the old one and activate this one. The ninja-auto-post-expire meta key =_njtape_expiration_date= belongs to that other plugin, so it is unchanged.
+- *Regenerated docs:* I edited =docs/*.html= directly so they match. Running =bin/org2html.sh= again should give the same result.
+- *Typo left alone:* =spec/todo.org= line 53 says =contact-2post=, which isn't one of your patterns. I didn't change it.
+
+** Prompt 2
+
++ The review of this plugin has this problem:
+  - Calling core files like wp-config.php, wp-blog-header.php,
+    wp-load.php directly via an include is not permitted.  These calls
+    are prone to failure as not all WordPress installs have the exact
+    same file structure. In addition it opens your plugin to security
+    issues, as WordPress can be easily tricked into running code in an
+    unauthenticated manner.  Your code should always exist in
+    functions and be called by action hooks. This is true even if you
+    need code to exist outside of WordPress.
+
++ I think the requires  in function ttfk_fCreateAttachment are the problem. Can this be rewritten?
+
++ The code is at:
+  https://github.com/TurtleEngr/WP-turtle-template-form-knitter/tree/feature/rename
++ You can ignore all the files in the spec/ diretory
++ Follow the prompts in CLAUDE.org
++ Deliver the changed files as downloads.
+
+** Response 2
+
+I rewrote =ttfk_fCreateAttachment= so the plugin no longer includes
+any WordPress core file. You were right that the two
+=require_once(ABSPATH . 'wp-admin/includes/…')= lines in that function
+are the only includes in the shipped plugin. I tested the change on a
+real WordPress 7.2 site with CF7 and Flamingo, submitting a form with
+an image over HTTP.
+
+*** Why it can't just drop the requires
+- The requires load =wp_generate_attachment_metadata()=, which makes the thumbnail and medium sizes.
+- WordPress only loads that function for admin requests. A CF7 submission is a front-end REST request, so the function isn't there.
+- So the work has to move to a request where WordPress has already loaded it.
+
+*** What the new code does
+- =ttfk_fCreateAttachment= still copies the file and adds it to the
+  Media Library. Instead of making the image sizes, it marks the
+  attachment with a meta key, =_ttfk_need_meta=.
+- A new function, =ttfk_fMakeAttachMeta=, runs on =admin_init=. It
+  makes the sizes for up to 10 marked attachments and removes each
+  mark.
+- =admin_init= fires on any admin page load, including
+  =admin-ajax.php=. In practice the sizes exist before anyone reviews
+  the pending post.
+
+*** Test results
+- Right after the submission, the pending post was created and the
+  image was attached and set as the featured image. It had no image
+  sizes yet.
+- After one request to =admin-ajax.php=, the 150×150 and 300×200 sizes
+  were on disk and the metadata was saved.
+- No PHP errors were logged.
+
+*** Tradeoffs
+- Until an admin page is loaded, the image has no smaller sizes. The
+  post is Pending, so it isn't public in that window.
+- =ttfk_fCreateAttachment= now returns the attachment ID instead of
+  the metadata. Nothing in the plugin uses the return value.
+
+*** My uncertainty
+That review message is the standard one for =wp-load.php= and similar
+files. Including =wp-admin/includes/image.php= is a common, documented
+pattern that reviewers usually accept. If the review email quoted
+specific lines, check them. If it quoted something else, this change
+may not be what they want, and you might prefer to reply to the
+reviewer and keep the simpler original code.
+
+*** Other notes
+- I updated =development.org= to show the new hook and function. I
+  also corrected its function count, which was already out of date,
+  to 31.
+- I couldn't run =bin/org2html.sh= here, so run =make= to regenerate
+  =docs/development.html=.
+- Not changed: =submit.php= on this branch still calls the old name,
+  =cx2p_fCreateAttachment=, and a file from the earlier =/tmp/c2p-*=
+  setup. It's a test script, not in the zip, but it will fail as it
+  stands.
+
+** Prompt 3
++ I updated the alert text in js/ttfk-paste.js and re-installed the
+  plugin, but the old text is output. Why?
+
++ The code is at:
+  https://github.com/TurtleEngr/WP-turtle-template-form-knitter/tree/feature/rename

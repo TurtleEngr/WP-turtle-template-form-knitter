@@ -122,7 +122,7 @@
         if (!Array.isArray(tErrorList) || !tErrorList.length) {
             return;
         }
-        alert('Turtle Template Form Knitter errors (post not created):\n- ' + tErrorList.join('\n- '));
+        alert('Turtle Template Form Knitter errors. Post not created.\n- To report, copy these errors now (they are not saved).\n- ' + tErrorList.join('\n- '));
     }
 
     document.addEventListener('paste', ttfk_fOnPaste);

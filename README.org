@@ -30,7 +30,7 @@ is attached as the post's featured image
 3. Optional: Install ninja-auto-post-expire plugin
 4. If save-cf7-file-uploads is installed, delete it. It is not
    compatible with this plugin.
-5. Install and activate this plugin: turtle-template-form-knitter
+5. Install this plugin: turtle-template-form-knitter
 
 *** Development Installs
 
@@ -38,7 +38,7 @@ Some of these are not stable versions.
 
 1. Follow the Installation steps 1 to 4 above.
 2. Go to: https://moria.whyayh.com/rel/released/software/own/WP-turtle-template-form-knitter
-3. Then download the contact-2-VER.zip file you want.
+3. Then download the turtle-template-form-knitter-VER.zip file you want.
 4. In WordPress, install with Upload Plugin.
 
 ** Usage
@@ -181,12 +181,13 @@ at: <a href="development.html" target="_blank"> Plugin Development</a>
 Errors found while a form submission is processed are collected in
 memory.
 
-When Contact Form 7 form is submitted any errors in contac-2-form will
-be reported in a popup, usually a post will not be created. For
-example:
+When Contact Form 7 form is submitted any errors in
+turtle-template-form-knitter will be reported in a popup, usually a
+post will not be created. For example:
 
 #+begin_example
-Turtle Template Form Knitter errors:
+Turtle Template Form Knitter errors. Post not created.
+To report, copy these errors now (they are not saved).
 - file type not allowed, not saved: photo.exe
 - invalid expire-date: "2026-13-01"
 #+end_example

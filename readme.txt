@@ -23,17 +23,14 @@ the "expiry date" field for a post can be set with this plugin.
 
 This plugin assumes you are using Gutenberg Blocks for editing.
 
-Files uploaded with the Contact Form 7 "[file NAME]" fields are saved
-to the Media Library. Only image files are saved. The type is checked
-from the file content, and the file extension must also be an allowed
-image type. Other files are skipped, and the error is reported in a
-popup. File names are reduced to the characters a-z, A-Z, 0-9, ".",
-"_" and "-", and existing files are never overwritten: "_1", "_2", and
-so on is added to the name.
+Image files uploaded with the Contact Form 7 "[file NAME]" fields are
+saved to the Media Library. The file type and the file extension must
+be an allowed image type. Non-image files are skipped, and the error
+is reported in a popup. File names are converted to the characters a-z,
+A-Z, 0-9, ".", "_" and "-", and existing files are never overwritten:
+"_1", "_2", and so on is added to the name.
 
-The images URLs added to the created post, and the first uploaded
-image is used for the Featured Image. If an uploaded file could not be
-saved, the error message is reported with a popup.
+The first uploaded image is used for the Featured Image.
 
 == Installation ==
 
@@ -41,17 +38,12 @@ Install these plugins in this order.
 
 1. Install contact-form-7 plugin.
 1. Install flamingo plugin.
-1. Install this plugin turtle-template-form-knitter
-
-If the save-cf7-file-uploads plugin is installed, delete it. That
-functionality is handled by this plugin.
-
-In the "Additional Settings" tab for a contact form make sure
-"do_not_store: true" is not defined.
+1. If installed, remove the conflicting  save-cf7-file-uploads plugin.
+1. Install this plugin turtle-template-form-knitter.
 
 == Frequently Asked Questions ==
 
-= Where can I get more documentation =
+= Where can I find the documentation =
 
 See: https://turtleengr.github.io/WP-turtle-template-form-knitter/
 
@@ -67,34 +59,28 @@ See: https://turtleengr.github.io/WP-turtle-template-form-knitter/#template-page
 
 See: https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues
 
-= Where can I find newer versions? =
+= Where can I find development versions? =
 
-The latest "stable version" can be found at
-https://moria.whyayh.com/rel/released/software/own/WP-turtle-template-form-knitter/
-(or if accepted, at wordpress.org.)
-
-For development versions see:
+For "unstable" development versions see:
 https://turtleengr.github.io/WP-turtle-template-form-knitter/#development-installs
 
 == Changelog ==
 
-= 1.4.6 =
+= 1.0.2 =
+
+- Renamed this plugin to comply with naming convention.
+
+- Identified a "date" type problem with contact-form-7. See Issue 1,
+  for the problem and a workaround.
 
 - Updated documentation.
 
-= 1.4.2 =
-
 - Report errors with a popup.
-
-- Identified problem and a workaround with the "date" type in
-  contact-form-7. (See Issue 1)
-
-= 1.1.0 =
 
 - Changed to follow the wordpress.org plugin guidelines.
 
-- Merged in the save-cf7-file-uploads plugin functionality.
-  That plugin should not be installed.
+- save-cf7-file-uploads plugin functionality has been added to this
+  plugin. That plugin should not be installed.
 
 - Fixed: uploaded images were not attached to the post (hook name
   mismatch).

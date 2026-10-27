@@ -494,8 +494,7 @@ ATTR-BEGIN
 title: {your-subject}
 categories: {category-1}
 tags: {tags-1}
-publish-date: {date-1}
-expire-date: {time-beg-1}
+expire-date: {date-1}
 expire-time: {time-end-1}
 ATTR-END
 

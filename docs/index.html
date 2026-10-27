@@ -10,7 +10,9 @@
 <body>
   <hr />
   <h1 id="turtle-template-form-knitter">Turtle Template Form Knitter</h1>
-  <p>ver-1.0.4</p>
+  <p>ver-1.0.5</p>
+  <p>This plugin "knits" together other plugins. Rather than trying to "do it
+  all" this plugin leverages from other great plugins.</p>
   <p>When a Contact Form 7 form is submitted, this plugin saves the uploaded
   image files to the Media Library. Then this plugin can create a "pending
   post" from a template post page. The first uploaded image is attached as
@@ -20,13 +22,13 @@
   <ol>
     <li>Install contact-form-7 plugin.
       <ul>
-        <li>Rollback to version 6.1.7, if date fields don't work. For why see
+        <li>If date fields don't work, rollback to version 6.1.7. For why see
         issue: <a href=
         "https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues/1">
           https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues/1</a>
         </li>
-        <li>Installing "WP Rollback" plugin is the easiest way to rollback
-        the plugin.</li>
+        <li>Installing the "WP Rollback" plugin is the easiest way to
+        rollback the plugin.</li>
       </ul>
     </li>
     <li>Install flamingo plugin.</li>
@@ -50,13 +52,14 @@
   <hr />
   <h2 id="usage">Usage</h2>
   <p>To use this plugin, you need to add some things to your contact-forms-7
-  forms. See "Contact Form Settings" section.</p>
-  <p>Also, you need to create a template for your posts. See "Template Page"
-  section.</p>
-  <p>Uploaded images are saved for every form, even without <code class=
-  "verbatim">create_post</code>. See "Uploaded Files" section.</p>
+  forms. See the "Contact Form Settings" and the "Flamingo" sections.</p>
+  <p>Also, you need to create a template for your posts. See the "Template
+  Page" section.</p>
+  <p>Uploaded images are saved for forms that have a "file" type. See
+  "Uploaded Files" section.</p>
   <p>If you installed ninja-auto-post-expire, the "Post" option needs to be
-  set to "Yes" for the Post Expire Settings.</p>
+  set to "Yes" for the Post Expire Setting to be active. See: Settings -&gt;
+  Post Expire Settings -&gt; Post.</p>
   <h3 id="contact-form-settings">Contact Form Settings</h3>
   <p>In the contact form's "Additional Settings" tab, add these settings:</p>
   <pre class="example"><code>create_post: true
@@ -92,6 +95,17 @@ do_not_store: false
   <p>This plugin does not "publish" the posts, but you should turn on
   reCAPTCHA in contact-form-7 settings so your admin doesn't get spammed with
   bot submitted "Pending" posts.</p>
+  <h3 id="flamingo">Flamingo</h3>
+  <p>When <code class="verbatim">do_not_store</code> is set to true, form
+  data will not be saved in the DB.</p>
+  <p>For the turtle-template-form-knitter plugin to work, this option needs
+  to be set to "false", or not put in a form's "Additional Settings" tab.</p>
+  <p>You can decide if a form's data will be saved in the DB, independent of
+  this plugin. However, you'll want to cleanup old form data. Visit Flamingo
+  -&gt; Inbound Messages to select the messages to be trashed. You can also
+  trash email addresses that are no longer needed.</p>
+  <p>Flamingo documentation can be found at: <a href=
+  "https://contactform7.com/save-submitted-messages-with-flamingo/">https://contactform7.com/save-submitted-messages-with-flamingo/</a></p>
   <h3 id="contact-form-page">Contact Form Page</h3>
   <p>For each contact form, you will create a page that includes the
   contact-form-7 block the selects the form. See <a href="example.html#page"
@@ -172,6 +186,12 @@ ATTR-END
   </ol>
   <p>If a post is created, the first saved image is the post's Featured
   Image.</p>
+  <h3 id="pending-posts">Pending Posts</h3>
+  <p>When a form is successfully filled out, and the "Additional Settings"
+  are set to create a post, a "Pending" post will be created. You can now
+  edit the post to clean it up. Mainly you'll want to delete the Notes
+  section. If you find you are continually moving things around, you might
+  want to change the template page for the generated posts.</p>
   <hr />
   <h2 id="examples">Examples</h2>
   <p>Complete examples can be found at <a href="example.html"
@@ -183,16 +203,13 @@ ATTR-END
   You can also make Feature Requests there.</p>
   <hr />
   <h2 id="for-developers">For Developers</h2>
-  <p>If you want to modify the plugin's code, you can find the directions at:
-  <a href="development.html"
+  <p>If you want to modify this plugin's code, you can find the directions
+  at: <a href="development.html"
      target="_blank">Plugin Development</a></p>
   <hr />
   <h2 id="error-popup">Error Popup</h2>
-  <p>Errors found while a form submission is processed are collected in
-  memory.</p>
   <p>When Contact Form 7 form is submitted any errors in
-  turtle-template-form-knitter will be reported in a popup, usually a post
-  will not be created. For example:</p>
+  turtle-template-form-knitter will be reported in a popup. For example:</p>
   <pre class=
   "example"><code>Turtle Template Form Knitter errors. Post not created.
 To report, copy these errors now (they are not saved).
@@ -203,7 +220,7 @@ file type not allowed, not saved: photo.exe
 
 invalid expire-date: "2026-13-01"
 </code></pre>
-  <p>If you see this pop-up, the submit has failed, even though a "success"
+  <p>If you see an error pop-up, the submit has failed, even if a "success"
   message will be displayed. If you can't correct the problem, or it looks
   like an internal error, cut/pasted the error to your Webmaster. If the
   Webmaster can't fix the problem, they can file an issue (see the Support
@@ -213,10 +230,10 @@ invalid expire-date: "2026-13-01"
     <li>There were no errors.</li>
     <li>JavaScript is turned off in the browser.</li>
     <li>PHP stopped with a fatal error. Then the form does not get a reply at
-    all.</li>
+    all, and the page will probably "hang."</li>
   </ul>
-  <p>These are all the possible errors. NAME is the uploaded file's name,
-  PATH is where it was to be saved on the server.</p>
+  <p>Here is a list of all the possible errors. NAME is the uploaded file's
+  name, PATH is where it was to be saved on the server.</p>
   <ul>
     <li>Uploaded files. These can happen with any form, even without
     <code class="verbatim">create_post</code>. The other uploaded files are

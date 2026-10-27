@@ -12,8 +12,11 @@
 #+END_EXPORT
 * Turtle Template Form Knitter Development
 
-- First fork the https://turtleengr.github.io/WP-turtle-template-form-knitter/
-  repository.
+ver-VERSION
+
+First fork the
+https://turtleengr.github.io/WP-turtle-template-form-knitter/
+repository.
 
 ** Requirements for building
 

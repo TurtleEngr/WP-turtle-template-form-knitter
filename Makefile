@@ -200,9 +200,11 @@ dist/$(mName)/LICENSE : LICENSE
 docs/development.html : development.org
 	bin/rm-trailing-sp $?
 	bin/org2html.sh -i $? -o $@ -s 2
+	sed -i "s/VERSION/$$(cat VERSION)/" $@
 	sed -i 's/\&amp;/\&/g' $@
 
 docs/example.html : example.org
 	bin/rm-trailing-sp $?
 	bin/org2html.sh -i $? -o $@ -s 3
+	sed -i "s/VERSION/$$(cat VERSION)/" $@
 	sed -i 's/\&amp;/\&/g' $@

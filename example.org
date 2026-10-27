@@ -14,7 +14,7 @@
 ** Add Post
 *** Contact
 Create contact form: add-post
-**** Form
+**** Form tab
 #+begin_example
 &lt;details>&lt;summary>Click here for more details...&lt;/summary>
 You can click on the lines with an arrow icon to get more details
@@ -158,7 +158,7 @@ author interviews, links to review articles, etc.
 [submit "Send"]
 #+end_example
 
-**** Mail
+**** Mail tab
 #+begin_example
 To: ORG-post@googlegroups.com
 From: [_site_title] &lt;admin@example.com>
@@ -207,14 +207,14 @@ This message is from the add-post-form on website [_site_title] at URL
 [_site_url]
 #+end_example
 
-**** Message
+**** Message tab
 #+begin_example
 Thank you for adding the post details. We will let you know when it
 is posted. Let us know if you saw an error popup, because that means
 your submission may have failed.
 #+end_example
 
-**** Additional Settings
+**** Additional Settings tab
 #+begin_example
 skip_mail: on
 create_post: true
@@ -222,7 +222,7 @@ do_not_store: false
 post_template: template-post
 #+end_example
 
-*** Template
+*** Template Page
 Create a page named: template-post
 ##+begin_example
 ATTR-BEGIN
@@ -255,7 +255,7 @@ Alt Image URL: {image-url-1}
 Note: {notes-1}
 #+end_example
 
-*** Page
+*** Contact Form Page
 Create a page named: Add a Post Form
 #+begin_example
 Use this form to add new posts that would be of interest to ORG.
@@ -281,7 +281,7 @@ can see if the date has been correctly set.
 ** Add Event
 *** Contact
 Create contact form: add-event
-**** Form
+**** Form tab
 #+begin_example
 &lt;details>&lt;summary>Click here for more details...&lt;/summary>
 You can click on the lines with an arrow icon to get more details
@@ -411,7 +411,7 @@ suggest other categories and tags here.
 [submit "Send"]
 #+end_example
 
-**** Mail
+**** Mail tab
 #+begin_example
 To: ORG-post@googlegroups.com
 From: [_site_title] &lt;admin@example.com>
@@ -472,14 +472,14 @@ This message is from the add-event form on website [_site_title] at
 URL [_site_url]
 #+end_example
 
-**** Message
+**** Message tab
 #+begin_example
 Thank you for adding your event details. We will let you know when it
 is posted. Let us know if you saw an error popup, because that means
 your submission may have failed.
 #+end_example
 
-**** Additional
+**** Additional Settings tab
 #+begin_example
 skip_mail: on
 create_post: true
@@ -487,7 +487,7 @@ do_not_store: false
 post_template: template-event
 #+end_example
 
-*** Template
+*** Template Page
 Create a page named: template-event
 #+begin_example
 ATTR-BEGIN
@@ -521,7 +521,7 @@ Alt Image URL: {image-url-1}
 Note: {event-notes-1}
 #+end_example
 
-*** Page
+*** Contact Form Page
 Create a page named: Add An Event Form
 #+begin_example
 Use this form only for events that would be of interest to ORG.  The

@@ -38,6 +38,7 @@ Install these plugins in this order.
 
 1. Install contact-form-7 plugin.
 1. Install flamingo plugin.
+1. Optional: Install ninja-auto-post-expire plugin
 1. If installed, remove the conflicting  save-cf7-file-uploads plugin.
 1. Install this plugin turtle-template-form-knitter.
 
@@ -57,7 +58,7 @@ See: https://turtleengr.github.io/WP-turtle-template-form-knitter/#template-page
 
 = Where can I report bugs or feature requests? =
 
-See: https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues
+See: https://turtleengr.github.io/WP-turtle-template-form-knitter/#support
 
 = Where can I find development versions? =
 
@@ -66,9 +67,9 @@ https://turtleengr.github.io/WP-turtle-template-form-knitter/#development-instal
 
 == Changelog ==
 
-= 1.0.2 =
+= 1.0.6 =
 
-- Renamed this plugin to comply with naming convention.
+- Renamed this plugin to comply with WordPress.org naming convention.
 
 - Identified a "date" type problem with contact-form-7. See Issue 1,
   for the problem and a workaround.

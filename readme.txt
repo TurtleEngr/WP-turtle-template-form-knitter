@@ -67,7 +67,7 @@ https://turtleengr.github.io/WP-turtle-template-form-knitter/#development-instal
 
 == Changelog ==
 
-= 1.0.6 =
+= 1.0.7 =
 
 - Renamed this plugin to comply with WordPress.org naming convention.
 

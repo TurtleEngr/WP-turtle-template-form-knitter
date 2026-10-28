@@ -20,7 +20,7 @@
         tab-include-list = .sh .inc .pod .md .php
         tab-exclude-list = Makefile .phar
         check-for-big-files = true
-        binary-file-size = 40k
+        binary-file-size = 200k
 
 # git-flow doc: https://nvie.com/posts/a-successful-git-branching-model/
 # Run: git flow init

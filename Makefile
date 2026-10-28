@@ -37,7 +37,6 @@ mPubDev = /rel/development/software/own/$(mProj)
 mPubRel = /rel/released/software/own/$(mProj)
 
 # --------------------
-
 usage : verify
 	@echo
 	@echo '===================='
@@ -123,11 +122,6 @@ publish : check-rel
 	@echo 'If OK, make release'
 	@echo 'If done, make dist-clean'
 
-release : check-rel
-	@echo TBD - update subversion copy at wordpress.org
-	#cp VERSION VERSION-rel
-	#@echo 'If done, make dist-clean'
-
 clean :
 	-find . -type f -name '*~' -exec rm {} \;
 
@@ -159,8 +153,8 @@ check-dev :
 		exit 1; \
 	fi
 
-check-rel :
-	if diff -q VERSION VERSION-rel >/dev/null 2>&1; then \
+check-pub :
+	if diff -q VERSION VERSION-pub >/dev/null 2>&1; then \
 		echo "Released versions must be different."; \
 		echo "increment and rebuild."; \
 		exit 1; \
@@ -208,3 +202,80 @@ docs/example.html : example.org
 	bin/org2html.sh -i $? -o $@ -s 3
 	sed -i "s/VERSION/$$(cat VERSION)/" $@
 	sed -i 's/\&amp;/\&/g' $@
+
+# ========================================
+# Plugin Owner Only
+
+mPublicUrl = https://wordpress.org/plugins/turtle-template-form-knitter
+
+mSvnUrl = https://plugins.svn.wordpress.org/turtle-template-form-knitter
+mSvnUser = --usernameturtleengr
+mSvnLocalTop = ~/ver/svn/app
+mSvnLocal = ~/ver/svn/app/$(mName)
+
+mSvnList = \
+	$(mSvnLocal)/assets/banner-772x250.png \
+	$(mSvnLocal)/assets/icon-256x256.png \
+	$(mSvnLocal)/trunk/LICENSE \
+	$(mSvnLocal)/trunk/readme.txt \
+	$(mSvnLocal)/trunk/js/ttfk-paste.js \
+	$(mSvnLocal)/trunk/turtle-template-form-knitter.php
+
+mDistSrc = dist/turtle-template-form-knitter
+
+# --------------------
+release-help :
+	@echo 'Set SVN credentials here:'
+	@echo 'https://profiles.wordpress.org/turtleengr/profile/edit/group/3/?screen=svn-password'
+	@echo 'To save credentials, run this:'
+	@echo 'svn ls $(mSvnUser) $(mSvnUrl)'
+
+release-build : svn-update $(mSvnList)
+
+release-tag : check-rel
+	tCurDir=$$PWD; \
+	cd $(mSvnLocal); \
+	echo svn cp trunk tags/$$(cat $$tCurDir/VERSION-pub)
+
+release : check-rel
+	@echo TBD - update subversion copy at wordpress.org
+	#cp VERSION VERSION-rel
+	#@echo 'If done, make dist-clean'
+
+check-rel :
+	if diff -q VERSION VERSION-rel >/dev/null 2>&1; then \
+		echo "Released versions must be different."; \
+		echo "increment and rebuild."; \
+		exit 1; \
+	fi
+
+svn-first : $(mSvnLocalTop)
+	cd $?; \
+	svn co $(mSvnUrl) $(mSvnUser)
+
+svn-update : $(mSvnLocal)
+	cd $?; \
+	svn up $(mSvnUser)
+
+$(mSvnLocalTop) :
+	-mkdir -p $@
+
+$(mSvnLocal)/assets/banner-772x250.png : docs/banner-772x250.png
+	cp $? $@
+
+$(mSvnLocal)/assets/icon-256x256.png : docs/icon-256x256.png
+	cp $? $@
+
+$(mSvnLocal)/trunk/LICENSE : dist/turtle-template-form-knitter/LICENSE
+	cp $? $@
+
+$(mSvnLocal)/trunk/readme.txt : dist/turtle-template-form-knitter/readme.txt
+	cp $? $@
+
+$(mSvnLocal)/trunk/js/ttfk-paste.js : dist/turtle-template-form-knitter/js/ttfk-paste.js
+	-mkdir -p $(mSvnLocal)/trunk/js
+	cp $? $@
+
+$(mSvnLocal)/trunk/turtle-template-form-knitter.php : dist/turtle-template-form-knitter/turtle-template-form-knitter.php
+	cp $? $@
+

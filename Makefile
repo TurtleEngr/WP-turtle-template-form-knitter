@@ -103,8 +103,9 @@ save development : check-dev
 	git push origin $(mBranch)
 	@echo 'If OK, make publish'
 
-publish : check-rel dist/$(mName)-$$(cat VERSION-dev).zip
+publish : check-rel
 	if [[ "$(mBranch)" != "develop" ]]; then exit 1; fi
+	if [[ ! -f dist/$(mName)-$$(cat VERSION-dev).zip ]]; then exit 1; fi
 	-git ci -am Updated
 	git tag -f "ver-$$(cat VERSION-dev)"
 	-git push origin --delete "ver-$$(cat VERSION-dev)"

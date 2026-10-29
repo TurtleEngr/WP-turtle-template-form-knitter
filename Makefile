@@ -244,10 +244,10 @@ release-help :
 
 release : check-rel release-build release-tag
 	cd $(mSvnLocal); \
-	svn stat; \
-	read -p 'Commit these changes? (y/n) '; \
-	if [ "$REPLY" != 'y' ]; then echo 'exit 1'; fi; \
-	echo svn ci -m 'Commit a new version.' $(mSvnUser)
+	  svn stat; \
+	  read -p 'Commit these changes? (y/n) '; \
+	  if [ "$REPLY" != 'y' ]; then echo 'exit 1'; fi; \
+	  echo svn ci -m 'Commit a new version.' $(mSvnUser)
 	echo cp VERSION-pub VERSION-rel
 	echo -git ci -am Updated
 	echo git push origin develop
@@ -256,17 +256,17 @@ release : check-rel release-build release-tag
 
 release-build : svn-update $(mSvnList)
 	cd $(mSvnLocal); \
-	svn stat
+	  svn stat
 	@echo 'If OK, make release-tag'
 
 release-tag : check-rel
 	-cd $(mSvnLocal); \
-	find trunk -exec svn add {} \;
-	tCurDir=$$PWD
-	cd $(mSvnLocal); \
-	if [ -d tags/$$(cat $$tCurDir/VERSION-pub) ]; then exit 1; fi; \
-	svn cp trunk tags/$$(cat $$tCurDir/VERSION-pub); \
-	svn stat
+	  find trunk -exec svn add {}
+	tCurDir=$$PWD; \
+	  cd $(mSvnLocal); \
+	  if [ -d tags/$$(cat $$tCurDir/VERSION-pub) ]; then exit 1; fi; \
+	  svn cp trunk tags/$$(cat $$tCurDir/VERSION-pub); \
+	  svn stat
 	@echo 'If OK, make release'
 
 # --------------------
@@ -281,11 +281,11 @@ check-rel :
 
 svn-first : $(mSvnLocalTop)
 	cd $?; \
-	svn co $(mSvnUrl) $(mSvnUser)
+	  svn co $(mSvnUrl) $(mSvnUser)
 
 svn-update : $(mSvnLocal)
 	cd $?; \
-	svn up $(mSvnUser)
+	  svn up $(mSvnUser)
 
 $(mSvnLocalTop) :
 	-mkdir -p $@

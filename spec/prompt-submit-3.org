@@ -137,3 +137,113 @@ reviewer and keep the simpler original code.
 
 + The code is at:
   https://github.com/TurtleEngr/WP-turtle-template-form-knitter/tree/feature/rename
+
+** Response 3
+
+The problem is caching by browser or a WordPress plugin.
+
+** Prompt 4
+
++ Running plugin-check on turtle-template-form-knitter plugin
+  (ver-1.0.8) gives this warning:
+  "WordPress.DB.SlowDBQuery.slow_db_query_meta_key Detected usage of
+  meta_key, possible slow query."
+
++ Is this a problem? If yes, can it be corrected?
+
++ The code is at:
+  https://github.com/TurtleEngr/WP-turtle-template-form-knitter
+
+** Response 4
+
+I'll pull the plugin code and find where =meta_key= is used.
+
+*** Short answer:
+
+not a real problem here, and yes, it can be cleared.
+
+The warning comes from one place, =ttfk_fMakeAttachMeta()= (line ~229
+in =turtle-template-form-knitter.php=):
+
+#+begin_example
+$tIdList = get_posts([
+    'post_type'   => 'attachment',
+    'post_status' => 'inherit',
+    'meta_key'    => ttfk_cNeedMetaKey,   // <-- flagged
+    'fields'      => 'ids',
+    'numberposts' => 10,
+]);
+#+end_example
+
+*** Why it's not really slow.
+
+The =WordPress.DB.SlowDBQuery= sniff flags any use of =meta_key=,
+=meta_value= or =meta_query=, without looking at how it's used. The
+slow case is filtering on =meta_value=, which is not indexed. You only
+filter on =meta_key=, which is indexed in =wp_postmeta=. The query
+only fetches IDs and is limited to 10 rows. It's also a warning, not
+an error, so the WordPress.org plugin review usually doesn't block on
+it.
+
+*** The one real cost.
+
+The query runs on every =admin_init=, so every admin page load does
+this join, even when nothing is pending. On a site with a big
+=wp_postmeta= table that's a small, constant overhead.
+
+*** Ways to fix it:
+
+1. Suppress it with a reason.
+
+   This is the smallest change and the usual practice:
+
+#+begin_example
+   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- indexed key only, max 10 IDs
+   'meta_key'    => ttfk_cNeedMetaKey,
+#+end_example
+
+   It changes no behavior. The admin_init cost stays.
+
+2. Gate it with an option flag.
+
+   When =ttfk_fCreateAttachment()= adds the meta, also set an
+   autoloaded option such as =ttfk_need_meta =
+   1=. =ttfk_fMakeAttachMeta()= returns at once unless that flag is
+   set, and clears the flag when the query finds nothing. This removes
+   the per-page cost. You would still need option 1's comment to make
+   the warning go away.
+
+3. Replace the post meta with an option that holds the list of pending IDs.
+
+   This removes the meta query entirely, so the warning disappears
+   with no ignore comment. The tradeoff is that two form submissions
+   arriving at the same moment could both read and rewrite the list,
+   and one ID could be lost. That would leave an attachment without
+   thumbnails. The current per-post meta approach doesn't have that
+   race.
+
+My suggestion is 1., or 1. + 2. if you want to drop the admin
+overhead. Option 3 trades a harmless warning for a small correctness
+risk.
+
+Which do you want? I'll return the complete updated
+=turtle-template-form-knitter.php=.
+
+*** Me: 1
+
+*** Response
+
+I've attached the updated =turtle-template-form-knitter.php=, built
+from the repo's current =develop= code (commit 60f528c). The only
+change is one comment line placed directly above the flagged
+='meta_key'= line in =ttfk_fMakeAttachMeta()=:
+
+#+begin_example
+// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- indexed key only, max 10 IDs
+#+end_example
+
+=php -l= reports no syntax errors. I didn't run plugin-check itself
+here. When you re-run it, that =slow_db_query_meta_key= warning should
+be gone. It keeps working if =bash-fmt= or =phptidy= re-indents the
+code, as long as the comment stays on the line right above
+='meta_key'=.

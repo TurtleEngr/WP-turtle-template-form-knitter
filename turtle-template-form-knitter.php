@@ -229,6 +229,7 @@ function ttfk_fMakeAttachMeta()
     $tIdList = get_posts([
         'post_type'   => 'attachment',
         'post_status' => 'inherit',
+        // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- indexed key only, max 10 IDs
         'meta_key'    => ttfk_cNeedMetaKey,
         'fields'      => 'ids',
         'numberposts' => 10,

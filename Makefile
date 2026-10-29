@@ -263,9 +263,9 @@ release : check-rel
 	  read -p 'Commit these changes? (y/n) '; \
 	  if [ "$REPLY" != 'y' ]; then echo 'exit 1'; fi; \
 	  svn ci -m 'Commit a new version.' $(mSvnUser)
-	echo cp VERSION-pub VERSION-rel
-	echo -git ci -am Updated
-	echo git push origin develop
+	cp VERSION-pub VERSION-rel
+	-git ci -am Updated
+	git push origin develop
 	@echo "Look for email and verify after $$('date' --date 'now + 6 hours'):"
 	@echo 'firefox $(mPublicUrl)'
 

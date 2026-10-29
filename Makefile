@@ -96,7 +96,7 @@ save development : check-dev
 	-git ci -am Updated
 	git push origin $(mBranch)
 	-ssh $(mServer) mkdir -p $(mPubDev)
-	rsync -a $(mDocList) dist/$(mName)/readme.txt dist/$(mName)-$$(cat VERSION).zip $(mServer):$(mPubDev)
+	rsync -a docs/* dist/$(mName)/readme.txt dist/$(mName)-$$(cat VERSION).zip $(mServer):$(mPubDev)
 	ssh $(mServer) mv -f $(mPubDev)/index.html $(mPubDev)/README.html
 	cp VERSION VERSION-dev
 	git ci -am Updated
@@ -116,7 +116,7 @@ publish : check-rel
 	git push --tags origin main
 	git co develop
 	-ssh $(mServer) mkdir -p $(mPubRel)
-	rsync -a $(mDocList) readme.txt dist/$(mName)-$$(cat VERSION-dev).zip $(mServer):$(mPubRel)
+	rsync -a docs/* readme.txt dist/$(mName)-$$(cat VERSION-dev).zip $(mServer):$(mPubRel)
 	ssh $(mServer) mv -f $(mPubRel)/index.html $(mPubRel)/README.html
 	cp VERSION VERSION-pub
 	-git ci -am Updated

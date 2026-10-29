@@ -103,10 +103,11 @@ save development : check-dev
 	git push origin $(mBranch)
 	@echo 'If OK, make publish'
 
-publish : check-rel
+publish : check-rel dist/$(mName)-$$(cat VERSION-dev).zip
 	if [[ "$(mBranch)" != "develop" ]]; then exit 1; fi
 	-git ci -am Updated
-	git tag -f "ver-$$(cat VERSION)"
+	git tag -f "ver-$$(cat VERSION-dev)"
+	-git push origin --delete "ver-$$(cat VERSION-dev)"
 	git push --tags origin develop
 	git co main
 	git pull --tags origin main
@@ -114,7 +115,7 @@ publish : check-rel
 	git push --tags origin main
 	git co develop
 	-ssh $(mServer) mkdir -p $(mPubRel)
-	rsync -a $(mDocList) readme.txt dist/$(mName)-$$(cat VERSION).zip $(mServer):$(mPubRel)
+	rsync -a $(mDocList) readme.txt dist/$(mName)-$$(cat VERSION-dev).zip $(mServer):$(mPubRel)
 	ssh $(mServer) mv -f $(mPubRel)/index.html $(mPubRel)/README.html
 	cp VERSION VERSION-pub
 	-git ci -am Updated
@@ -209,7 +210,7 @@ docs/example.html : example.org
 mPublicUrl = https://wordpress.org/plugins/turtle-template-form-knitter
 
 mSvnUrl = https://plugins.svn.wordpress.org/turtle-template-form-knitter
-mSvnUser = --usernameturtleengr
+mSvnUser = --username turtleengr
 mSvnLocalTop = ~/ver/svn/app
 mSvnLocal = ~/ver/svn/app/$(mName)
 
@@ -224,23 +225,49 @@ mSvnList = \
 mDistSrc = dist/turtle-template-form-knitter
 
 # --------------------
+# Main release targets to update plugins.svn.wordpress.org
+
 release-help :
-	@echo 'Set SVN credentials here:'
+	@echo 'Setup SVN credentials here:'
 	@echo 'https://profiles.wordpress.org/turtleengr/profile/edit/group/3/?screen=svn-password'
 	@echo 'To save credentials, run this:'
 	@echo 'svn ls $(mSvnUser) $(mSvnUrl)'
+	@echo 'svn-first - run this to setup the svn plugin area'
+	@echo
+	@echo 'release-build - copy files from publish step to svn area'
+	@echo 'release-tag - copy file from trunk to tags'
+	@echo 'release - commit all the changes'
+	@echo
+	@echo "Look for email and verify after $$('date' --date 'now + 6 hours'):"
+	@echo 'firefox $(mPublicUrl)'
+
+release : check-rel release-build release-tag
+	cd $(mSvnLocal); \
+	svn stat; \
+	read -p 'Commit these changes? (y/n) '; \
+	if [ "$REPLY" != 'y' ]; then echo 'exit 1'; fi; \
+	echo svn ci -m 'Commit a new version.' $(mSvnUser)
+	echo cp VERSION-pub VERSION-rel
+	echo -git ci -am Updated
+	echo git push origin develop
+	@echo "Look for email and verify after $$('date' --date 'now + 6 hours'):"
+	@echo 'firefox $(mPublicUrl)'
 
 release-build : svn-update $(mSvnList)
+	cd $(mSvnLocal); \
+	svn stat
+	@echo 'If OK, make release-tag'
 
 release-tag : check-rel
+	-find $(mSvnLocal) -type f -exec svn add {} \;
 	tCurDir=$$PWD; \
 	cd $(mSvnLocal); \
-	echo svn cp trunk tags/$$(cat $$tCurDir/VERSION-pub)
+	svn cp trunk tags/$$(cat $$tCurDir/VERSION-pub)
+	svn stat; \
+	@echo 'If OK, make release'
 
-release : check-rel
-	@echo TBD - update subversion copy at wordpress.org
-	#cp VERSION VERSION-rel
-	#@echo 'If done, make dist-clean'
+# --------------------
+# Helper targets
 
 check-rel :
 	if diff -q VERSION VERSION-rel >/dev/null 2>&1; then \
@@ -259,6 +286,9 @@ svn-update : $(mSvnLocal)
 
 $(mSvnLocalTop) :
 	-mkdir -p $@
+
+# --------------------
+# mSvnList targets
 
 $(mSvnLocal)/assets/banner-772x250.png : docs/banner-772x250.png
 	cp $? $@

@@ -242,18 +242,6 @@ release-help :
 	@echo "Look for email and verify after $$('date' --date 'now + 6 hours'):"
 	@echo 'firefox $(mPublicUrl)'
 
-release : check-rel release-build release-tag
-	cd $(mSvnLocal); \
-	  svn stat; \
-	  read -p 'Commit these changes? (y/n) '; \
-	  if [ "$REPLY" != 'y' ]; then echo 'exit 1'; fi; \
-	  echo svn ci -m 'Commit a new version.' $(mSvnUser)
-	echo cp VERSION-pub VERSION-rel
-	echo -git ci -am Updated
-	echo git push origin develop
-	@echo "Look for email and verify after $$('date' --date 'now + 6 hours'):"
-	@echo 'firefox $(mPublicUrl)'
-
 release-build : svn-update $(mSvnList)
 	cd $(mSvnLocal); \
 	  svn stat
@@ -268,6 +256,18 @@ release-tag : check-rel
 	  svn cp trunk tags/$$(cat $$tCurDir/VERSION-pub); \
 	  svn stat
 	@echo 'If OK, make release'
+
+release : check-rel
+	cd $(mSvnLocal); \
+	  svn stat; \
+	  read -p 'Commit these changes? (y/n) '; \
+	  if [ "$REPLY" != 'y' ]; then echo 'exit 1'; fi; \
+	  svn ci -m 'Commit a new version.' $(mSvnUser)
+	echo cp VERSION-pub VERSION-rel
+	echo -git ci -am Updated
+	echo git push origin develop
+	@echo "Look for email and verify after $$('date' --date 'now + 6 hours'):"
+	@echo 'firefox $(mPublicUrl)'
 
 # --------------------
 # Helper targets

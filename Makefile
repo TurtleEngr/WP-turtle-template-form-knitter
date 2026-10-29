@@ -188,7 +188,7 @@ dist/$(mName)/js/ttfk-paste.js : js/ttfk-paste.js
 	cp $? $@
 
 dist/$(mName)/readme.txt : VERSION readme.txt
-	sed "s/VERSION/$$(cat VERSION)/" <$? >$@
+	sed "s/VERSION/$$(cat VERSION)/" readme.txt >$@
 
 dist/$(mName)/LICENSE : LICENSE
 	-cp $? $@
@@ -260,11 +260,13 @@ release-build : svn-update $(mSvnList)
 	@echo 'If OK, make release-tag'
 
 release-tag : check-rel
-	-find $(mSvnLocal) -type f -exec svn add {} \;
-	tCurDir=$$PWD; \
+	-cd $(mSvnLocal); \
+	find trunk -exec svn add {} \;
+	tCurDir=$$PWD
 	cd $(mSvnLocal); \
-	svn cp trunk tags/$$(cat $$tCurDir/VERSION-pub)
-	svn stat; \
+	if [ -d tags/$$(cat $$tCurDir/VERSION-pub) ]; then exit 1; fi; \
+	svn cp trunk tags/$$(cat $$tCurDir/VERSION-pub); \
+	svn stat
 	@echo 'If OK, make release'
 
 # --------------------

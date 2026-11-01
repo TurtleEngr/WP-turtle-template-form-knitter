@@ -213,6 +213,13 @@ Complete examples can be found at
 Plugin bugs and documentation bugs can be filed at: [[https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues][Issues]] You can
 also make Feature Requests there.
 
+However, DO NOT REPORT SECURITY RELATED BUGS IN THE ISSUES AREA OR IN A
+PUBLIC FORUM--that gives the crackers access before the problem can be
+repaired. Follow the wordpress.org guidelines at
+https://developer.wordpress.org/plugins/wordpress-org/reporting-plugin-security-issues/
+They will disable the plugin and let the plugin authors know, so they
+can fix the defect.
+
 ** For Developers
 
 If you want to modify this plugin's code, you can find the directions

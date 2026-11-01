@@ -236,7 +236,7 @@ https://turtleengr.github.io/WP-turtle-template-form-knitter/development.html
 
 ** Error Popup
 
-When Contact Form 7 form is submitted any errors in
+When a Contact Form 7 form is submitted any errors in
 turtle-template-form-knitter will be reported in a popup.  For
 example:
 

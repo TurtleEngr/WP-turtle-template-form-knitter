@@ -112,7 +112,7 @@ https://contactform7.com/save-submitted-messages-with-flamingo/
 
 For each contact form, you will create a page that includes the
 contact-form-7 block the selects the form. See
-<a href="example.html#page" target="_blank">Page Example</a>
+https://turtleengr.github.io/WP-turtle-template-form-knitter/example.html#contact-form-page
 
 When you install a newer version of turtle-template-form-knitter, you
 will need to flush the browser and WordPress caches, so any JavaScript
@@ -179,6 +179,9 @@ to "Yes" in it's settings, Post Expire Settings.
 Invalid dates or times are ignored. An invalid expire-date is also
 shown in the error popup. See "Error Popup".
 
+For an example Template Page see:
+https://turtleengr.github.io/WP-turtle-template-form-knitter/example.html#template-page
+
 *** Uploaded Files
 
 Files uploaded with the Contact Form 7 =[file NAME]= field are saved
@@ -206,7 +209,7 @@ you might want to change the template page for the generated posts.
 
 ** Examples
 Complete examples can be found at
-<a href="example.html" target="_blank"> Turtle Template Form Knitter Examples</a>
+https://turtleengr.github.io/WP-turtle-template-form-knitter/example.html
 
 ** Support
 
@@ -228,7 +231,8 @@ can fix the defect.
 ** For Developers
 
 If you want to modify this plugin's code, you can find the directions
-at: <a href="development.html" target="_blank"> Plugin Development</a>
+at:
+https://turtleengr.github.io/WP-turtle-template-form-knitter/development.html
 
 ** Error Popup
 

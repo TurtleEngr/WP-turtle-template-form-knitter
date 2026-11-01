@@ -248,10 +248,10 @@ To report, copy these errors now (they are not saved).
 #+end_example
 
 If you see an error pop-up, the submit has failed, even if a "success"
-message will be displayed. If you can't correct the problem, or it
-looks like an internal error, cut/pasted the error to your Webmaster.
-If the Webmaster can't fix the problem, they can file an issue (see
-the Support section).
+message is displayed. If you can't correct the problem, or it looks
+like an internal error, cut/pasted the error to your Webmaster.  If
+the Webmaster can't fix the problem, they can file an plugin issue
+(see the Support section).
 
 The popup is not shown if:
 + There were no errors.

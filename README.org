@@ -210,8 +210,13 @@ Complete examples can be found at
 
 ** Support
 
-Plugin bugs and documentation bugs can be filed at: [[https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues][Issues]] You can
-also make Feature Requests there.
+If you need help, the Forum
+https://wordpress.org/support/plugin/turtle-template-form-knitter/ is
+the best place to start.
+
+Plugin bugs and documentation bugs can be filed at:
+https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues
+You can also make Feature Requests there.
 
 However, DO NOT REPORT SECURITY RELATED BUGS IN THE ISSUES AREA OR IN A
 PUBLIC FORUM--that gives the crackers access before the problem can be

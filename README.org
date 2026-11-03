@@ -112,7 +112,7 @@ https://contactform7.com/save-submitted-messages-with-flamingo/
 
 For each contact form, you will create a page that includes the
 contact-form-7 block the selects the form. See
-<a href="example.html#page" target="_blank">Page Example</a>
+https://turtleengr.github.io/WP-turtle-template-form-knitter/example.html#contact-form-page
 
 When you install a newer version of turtle-template-form-knitter, you
 will need to flush the browser and WordPress caches, so any JavaScript
@@ -179,6 +179,9 @@ to "Yes" in it's settings, Post Expire Settings.
 Invalid dates or times are ignored. An invalid expire-date is also
 shown in the error popup. See "Error Popup".
 
+For an example Template Page see:
+https://turtleengr.github.io/WP-turtle-template-form-knitter/example.html#template-page
+
 *** Uploaded Files
 
 Files uploaded with the Contact Form 7 =[file NAME]= field are saved
@@ -206,21 +209,34 @@ you might want to change the template page for the generated posts.
 
 ** Examples
 Complete examples can be found at
-<a href="example.html" target="_blank"> Turtle Template Form Knitter Examples</a>
+https://turtleengr.github.io/WP-turtle-template-form-knitter/example.html
 
 ** Support
 
-Plugin bugs and documentation bugs can be filed at: [[https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues][Issues]] You can
-also make Feature Requests there.
+If you need help, the Forum
+https://wordpress.org/support/plugin/turtle-template-form-knitter/ is
+the best place to start.
+
+Plugin bugs and documentation bugs can be filed at:
+https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues
+You can also make Feature Requests there.
+
+However, DO NOT REPORT SECURITY RELATED BUGS IN THE ISSUES AREA OR IN A
+PUBLIC FORUM--that gives the crackers access before the problem can be
+repaired. Follow the wordpress.org guidelines at
+https://developer.wordpress.org/plugins/wordpress-org/reporting-plugin-security-issues/
+They will disable the plugin and let the plugin authors know, so they
+can fix the defect.
 
 ** For Developers
 
 If you want to modify this plugin's code, you can find the directions
-at: <a href="development.html" target="_blank"> Plugin Development</a>
+at:
+https://turtleengr.github.io/WP-turtle-template-form-knitter/development.html
 
 ** Error Popup
 
-When Contact Form 7 form is submitted any errors in
+When a Contact Form 7 form is submitted any errors in
 turtle-template-form-knitter will be reported in a popup.  For
 example:
 
@@ -232,10 +248,10 @@ To report, copy these errors now (they are not saved).
 #+end_example
 
 If you see an error pop-up, the submit has failed, even if a "success"
-message will be displayed. If you can't correct the problem, or it
-looks like an internal error, cut/pasted the error to your Webmaster.
-If the Webmaster can't fix the problem, they can file an issue (see
-the Support section).
+message is displayed. If you can't correct the problem, or it looks
+like an internal error, cut/pasted the error to your Webmaster.  If
+the Webmaster can't fix the problem, they can file an plugin issue
+(see the Support section).
 
 The popup is not shown if:
 + There were no errors.

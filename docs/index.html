@@ -70,35 +70,33 @@ do_not_store: false
 </code></pre>
   <ul>
     <li>
-      <p><code class="verbatim">create_post</code> - this
-      turtle-template-form-knitter plugin option. If 'true' that activates
-      this plugin</p>
+      <p><code>create_post</code> - this turtle-template-form-knitter plugin
+      option. If 'true' that activates this plugin</p>
     </li>
     <li>
-      <p><code class="verbatim">post_template</code> - this
-      turtle-template-form-knitter plugin option. This is the "slug-name" for
-      a "page" that will be used as a template to generate a "Pending" post
-      from a form. See "Template Page" for details.</p>
+      <p><code>post_template</code> - this turtle-template-form-knitter
+      plugin option. This is the "slug-name" for a "page" that will be used
+      as a template to generate a "Pending" post from a form. See "Template
+      Page" for details.</p>
     </li>
     <li>
-      <p><code class="verbatim">skip_mail</code> - contact-form-7 plugin
-      option. This has no effect on the turtle-template-form-knitter plugin,
-      but you can decide if you want to send an email of the form, in
-      addition to making a post.</p>
+      <p><code>skip_mail</code> - contact-form-7 plugin option. This has no
+      effect on the turtle-template-form-knitter plugin, but you can decide
+      if you want to send an email of the form, in addition to making a
+      post.</p>
     </li>
     <li>
-      <p><code class="verbatim">do_not_store</code> - flamingo plugin option.
-      The default is 'false'. If it is set to 'true', the form data will not
-      be stored and this turtle-template-form-knitter plugin will not
-      work.</p>
+      <p><code>do_not_store</code> - flamingo plugin option. The default is
+      'false'. If it is set to 'true', the form data will not be stored and
+      this turtle-template-form-knitter plugin will not work.</p>
     </li>
   </ul>
   <p>This plugin does not "publish" the posts, but you should turn on
   reCAPTCHA in contact-form-7 settings so your admin doesn't get spammed with
   bot submitted "Pending" posts.</p>
   <h3 id="flamingo">Flamingo</h3>
-  <p>When <code class="verbatim">do_not_store</code> is set to true, form
-  data will not be saved in the DB.</p>
+  <p>When <code>do_not_store</code> is set to true, form data will not be
+  saved in the DB.</p>
   <p>For the turtle-template-form-knitter plugin to work, this option needs
   to be set to "false", or not put in a form's "Additional Settings" tab.</p>
   <p>You can decide if a form's data will be saved in the DB, independent of
@@ -109,19 +107,19 @@ do_not_store: false
   "https://contactform7.com/save-submitted-messages-with-flamingo/">https://contactform7.com/save-submitted-messages-with-flamingo/</a></p>
   <h3 id="contact-form-page">Contact Form Page</h3>
   <p>For each contact form, you will create a page that includes the
-  contact-form-7 block the selects the form. See <a href="example.html#page"
-     target="_blank">Page Example</a></p>
+  contact-form-7 block the selects the form. See <a href=
+  "https://turtleengr.github.io/WP-turtle-template-form-knitter/example.html#contact-form-page">
+  https://turtleengr.github.io/WP-turtle-template-form-knitter/example.html#contact-form-page</a></p>
   <p>When you install a newer version of turtle-template-form-knitter, you
   will need to flush the browser and WordPress caches, so any JavaScript
   changes will be used. Or you can set your WordPress cache to not cache the
   form pages.</p>
   <h3 id="template-page">Template Page</h3>
-  <p>All the blocks of the <code class="verbatim">'PageSlug'</code> page are
-  copied to the new post. <cite>{field}</cite> is replaced with the value of
-  the form 'field' with that name. The field's HTML text is escaped. Also,
-  "[" "]" is encoded so they cannot run a shortcode. Checkbox values are
-  joined with ",". If there is no fields with that name, <cite>{field}</cite>
-  is left as is.</p>
+  <p>All the blocks of the <code>'PageSlug'</code> page are copied to the new
+  post. <cite>{field}</cite> is replaced with the value of the form 'field'
+  with that name. The field's HTML text is escaped. Also, "[" "]" is encoded
+  so they cannot run a shortcode. Checkbox values are joined with ",". If
+  there is no fields with that name, <cite>{field}</cite> is left as is.</p>
   <p>Textarea fields are the exception: they can have some HTML. When HTML
   text is pasted into a form's textarea, it is cleaned, and the textarea
   shows the HTML tags that are kept. Only these tags are kept: h1, h2, h3,
@@ -153,35 +151,36 @@ expire-time: <cite>{field}</cite>
 ATTR-END
 </code></pre>
   <ul>
-    <li><code class="verbatim">title</code> - post title. See Flamingo
-    documentation for how to change <cite>{your-subject}</cite> Default:
-    UNDEFINED</li>
-    <li><code class="verbatim">categories</code>, <code class=
-    "verbatim">tags</code> - comma separated names or slugs. Only existing
-    categories and tags are used; others are ignored. Default: empty</li>
-    <li><code class="verbatim">publish-date</code> - YYYY-MM-DD, time is set
-    to 12:00. This date is kept when the post is published (a future date
-    makes it "Scheduled"). Default: the time the post is published.</li>
-    <li><code class="verbatim">expire-date</code> - YYYY-MM-DD. Saved in the
-    ninja-auto-post-expire meta (<code class=
-    "verbatim">_njtape_expiration_date</code>). Default: not set.</li>
-    <li><code class="verbatim">expire-time</code> - HH:MM. Default:
-    00:00</li>
+    <li><code>title</code> - post title. See Flamingo documentation for how
+    to change <cite>{your-subject}</cite> Default: UNDEFINED</li>
+    <li><code>categories</code>, <code>tags</code> - comma separated names or
+    slugs. Only existing categories and tags are used; others are ignored.
+    Default: empty</li>
+    <li><code>publish-date</code> - YYYY-MM-DD, time is set to 12:00. This
+    date is kept when the post is published (a future date makes it
+    "Scheduled"). Default: the time the post is published.</li>
+    <li><code>expire-date</code> - YYYY-MM-DD. Saved in the
+    ninja-auto-post-expire meta (<code>_njtape_expiration_date</code>).
+    Default: not set.</li>
+    <li><code>expire-time</code> - HH:MM. Default: 00:00</li>
   </ul>
   <p>ninja-auto-post-expire only acts on posts if its "Post" option is set to
   "Yes" in it's settings, Post Expire Settings.</p>
   <p>Invalid dates or times are ignored. An invalid expire-date is also shown
   in the error popup. See "Error Popup".</p>
+  <p>For an example Template Page see: <a href=
+  "https://turtleengr.github.io/WP-turtle-template-form-knitter/example.html#template-page">
+  https://turtleengr.github.io/WP-turtle-template-form-knitter/example.html#template-page</a></p>
   <h3 id="uploaded-files">Uploaded Files</h3>
-  <p>Files uploaded with the Contact Form 7 <code class="verbatim">[file
-  NAME]</code> field are saved to the Media Library.</p>
+  <p>Files uploaded with the Contact Form 7 <code>[file NAME]</code> field
+  are saved to the Media Library.</p>
   <ol>
     <li>Only image files are saved. The type is checked from the file
     content, and the file extension must also be an allowed image type. Other
     files are skipped and shown in the error popup.</li>
     <li>File names are normalized. File names can only contain letters in the
-    set: [a-zA-Z0-9._-]. Any letters not in the set are converted to a "<u>",
-    and repeated "</u>" are collapsed.</li>
+    set: [a-zA-Z0-9._-]. Any letters not in the set are converted to a
+    "<span class="underline">", and repeated "</span>" are collapsed.</li>
     <li>Existing files are never overwritten. "_1", "_2", … is added to the
     base name instead.</li>
   </ol>
@@ -195,21 +194,33 @@ ATTR-END
   want to change the template page for the generated posts.</p>
   <hr />
   <h2 id="examples">Examples</h2>
-  <p>Complete examples can be found at <a href="example.html"
-     target="_blank">Turtle Template Form Knitter Examples</a></p>
+  <p>Complete examples can be found at <a href=
+  "https://turtleengr.github.io/WP-turtle-template-form-knitter/example.html">
+  https://turtleengr.github.io/WP-turtle-template-form-knitter/example.html</a></p>
   <hr />
   <h2 id="support">Support</h2>
+  <p>If you need help, the Forum <a href=
+  "https://wordpress.org/support/plugin/turtle-template-form-knitter/">https://wordpress.org/support/plugin/turtle-template-form-knitter/</a>
+  is the best place to start.</p>
   <p>Plugin bugs and documentation bugs can be filed at: <a href=
-  "https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues">Issues</a>
+  "https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues">https://github.com/TurtleEngr/WP-turtle-template-form-knitter/issues</a>
   You can also make Feature Requests there.</p>
+  <p>However, DO NOT REPORT SECURITY RELATED BUGS IN THE ISSUES AREA OR IN A
+  PUBLIC FORUM–that gives the crackers access before the problem can be
+  repaired. Follow the wordpress.org guidelines at <a href=
+  "https://developer.wordpress.org/plugins/wordpress-org/reporting-plugin-security-issues/">
+  https://developer.wordpress.org/plugins/wordpress-org/reporting-plugin-security-issues/</a>
+  They will disable the plugin and let the plugin authors know, so they can
+  fix the defect.</p>
   <hr />
   <h2 id="for-developers">For Developers</h2>
   <p>If you want to modify this plugin's code, you can find the directions
-  at: <a href="development.html"
-     target="_blank">Plugin Development</a></p>
+  at: <a href=
+  "https://turtleengr.github.io/WP-turtle-template-form-knitter/development.html">
+  https://turtleengr.github.io/WP-turtle-template-form-knitter/development.html</a></p>
   <hr />
   <h2 id="error-popup">Error Popup</h2>
-  <p>When Contact Form 7 form is submitted any errors in
+  <p>When a Contact Form 7 form is submitted any errors in
   turtle-template-form-knitter will be reported in a popup. For example:</p>
   <pre class=
   "example"><code>Turtle Template Form Knitter errors. Post not created.
@@ -222,9 +233,9 @@ file type not allowed, not saved: photo.exe
 invalid expire-date: "2026-13-01"
 </code></pre>
   <p>If you see an error pop-up, the submit has failed, even if a "success"
-  message will be displayed. If you can't correct the problem, or it looks
-  like an internal error, cut/pasted the error to your Webmaster. If the
-  Webmaster can't fix the problem, they can file an issue (see the Support
+  message is displayed. If you can't correct the problem, or it looks like an
+  internal error, cut/pasted the error to your Webmaster. If the Webmaster
+  can't fix the problem, they can file an plugin issue (see the Support
   section).</p>
   <p>The popup is not shown if:</p>
   <ul>
@@ -237,39 +248,38 @@ invalid expire-date: "2026-13-01"
   name, PATH is where it was to be saved on the server.</p>
   <ul>
     <li>Uploaded files. These can happen with any form, even without
-    <code class="verbatim">create_post</code>. The other uploaded files are
-    still saved.
+    <code>create_post</code>. The other uploaded files are still saved.
       <ul>
-        <li><code class="verbatim">file extension not allowed, not saved:
-        NAME</code> - the file extension is not an allowed image type.</li>
-        <li><code class="verbatim">file type not allowed, not saved:
-        NAME</code> - the file content is not an allowed image type.</li>
-        <li><code class="verbatim">copy failed, not saved: PATH</code> - the
-        file could not be copied to the uploads directory.</li>
-        <li><code class="verbatim">not added to Media Library, file removed:
-        PATH: REASON</code> - the file was copied, but could not be added to
-        the Media Library.</li>
+        <li><code>file extension not allowed, not saved: NAME</code> - the
+        file extension is not an allowed image type.</li>
+        <li><code>file type not allowed, not saved: NAME</code> - the file
+        content is not an allowed image type.</li>
+        <li><code>copy failed, not saved: PATH</code> - the file could not be
+        copied to the uploads directory.</li>
+        <li><code>not added to Media Library, file removed: PATH:
+        REASON</code> - the file was copied, but could not be added to the
+        Media Library.</li>
       </ul>
     </li>
     <li>Form settings and template. No post is made, except for the ATTR-END
     error.
       <ul>
-        <li><code class="verbatim">post_template is not set for form
-        ID</code> - the form has <code class="verbatim">create_post:
-        true</code>, but no <code class="verbatim">post_template</code>.</li>
-        <li><code class="verbatim">post_template page not found: SLUG</code>
-        - there is no page with that slug.</li>
-        <li><code class="verbatim">ATTR-END not found in the template</code>
-        - the template has an ATTR-BEGIN line with no ATTR-END line. The post
-        is still made, but all the blocks after ATTR-BEGIN are left out.</li>
+        <li><code>post_template is not set for form ID</code> - the form has
+        <code>create_post: true</code>, but no
+        <code>post_template</code>.</li>
+        <li><code>post_template page not found: SLUG</code> - there is no
+        page with that slug.</li>
+        <li><code>ATTR-END not found in the template</code> - the template
+        has an ATTR-BEGIN line with no ATTR-END line. The post is still made,
+        but all the blocks after ATTR-BEGIN are left out.</li>
       </ul>
     </li>
     <li>Creating the post.
       <ul>
-        <li><code class="verbatim">wp_insert_post failed: REASON</code> -
-        WordPress could not create the post.</li>
-        <li><code class="verbatim">invalid expire-date: "VALUE"</code> -
-        expire-date is not YYYY-MM-DD.</li>
+        <li><code>wp_insert_post failed: REASON</code> - WordPress could not
+        create the post.</li>
+        <li><code>invalid expire-date: "VALUE"</code> - expire-date is not
+        YYYY-MM-DD.</li>
       </ul>
     </li>
   </ul>

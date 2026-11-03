@@ -135,18 +135,12 @@ dist-clean : clean
 # git push origin --delete v2.1.1
 
 # --------------------
-# Work Targets
+# Work Targets (sorted)
 
 $(mProduct) : $(mBuildList)
 	php -l $(mName).php
 	cd dist; zip -r $(mName)-$$(cat ../VERSION).zip $(mName)
 	-touch $@
-
-docs/index.html : README.org VERSION
-	bin/rm-trailing-sp $?
-	sed -i "s/^ver-[0-9.]*/ver-$$(cat VERSION)/" README.org
-	bin/org2html.sh -i README.org -o $@ -s 2
-	sed -i 's/\&amp;/\&/g' $@
 
 check-dev :
 	if diff -q VERSION VERSION-dev >/dev/null 2>&1; then \
@@ -162,26 +156,14 @@ check-pub :
 		exit 1; \
 	fi
 
-# --------------------
-# Single Targets
-
-VERSION :
-	echo '0.0.0' >$@
-
-incPatch : VERSION
-	incver.sh -p
-
-incMinor : VERSION
-	incver.sh -m
-
-incMajor : VERSION
-	incver.sh -M
-
 dist/$(mName) :
 	mkdir -p $@
 
 dist/$(mName)/$(mName).php : VERSION $(mName).php
 	sed "s/VERSION/$$(cat VERSION)/" <$(mName).php >$@
+
+dist/$(mName)/LICENSE : LICENSE
+	-cp $? $@
 
 dist/$(mName)/js/ttfk-paste.js : js/ttfk-paste.js
 	-mkdir -p $(@D)
@@ -189,9 +171,6 @@ dist/$(mName)/js/ttfk-paste.js : js/ttfk-paste.js
 
 dist/$(mName)/readme.txt : VERSION readme.txt
 	sed "s/VERSION/$$(cat VERSION)/" readme.txt >$@
-
-dist/$(mName)/LICENSE : LICENSE
-	-cp $? $@
 
 docs/development.html : development.org
 	bin/rm-trailing-sp $?
@@ -204,6 +183,24 @@ docs/example.html : example.org
 	bin/org2html.sh -i $? -o $@ -s 3
 	sed -i "s/VERSION/$$(cat VERSION)/" $@
 	sed -i 's/\&amp;/\&/g' $@
+
+docs/index.html : README.org VERSION
+	bin/rm-trailing-sp $?
+	sed -i "s/^ver-[0-9.]*/ver-$$(cat VERSION)/" README.org
+	bin/org2html.sh -i README.org -o $@ -s 2
+	sed -i 's/\&amp;/\&/g' $@
+
+incMajor : VERSION
+	incver.sh -M
+
+incMinor : VERSION
+	incver.sh -m
+
+incPatch : VERSION
+	incver.sh -p
+
+VERSION :
+	echo '0.0.0' >$@
 
 # ========================================
 # Plugin Owner Only
@@ -290,9 +287,6 @@ svn-update : $(mSvnLocal)
 $(mSvnLocalTop) :
 	-mkdir -p $@
 
-# --------------------
-# mSvnList targets
-
 $(mSvnLocal)/assets/banner-772x250.png : docs/banner-772x250.png
 	cp $? $@
 
@@ -302,13 +296,12 @@ $(mSvnLocal)/assets/icon-256x256.png : docs/icon-256x256.png
 $(mSvnLocal)/trunk/LICENSE : dist/turtle-template-form-knitter/LICENSE
 	cp $? $@
 
-$(mSvnLocal)/trunk/readme.txt : dist/turtle-template-form-knitter/readme.txt
-	cp $? $@
-
 $(mSvnLocal)/trunk/js/ttfk-paste.js : dist/turtle-template-form-knitter/js/ttfk-paste.js
 	-mkdir -p $(mSvnLocal)/trunk/js
 	cp $? $@
 
-$(mSvnLocal)/trunk/turtle-template-form-knitter.php : dist/turtle-template-form-knitter/turtle-template-form-knitter.php
+$(mSvnLocal)/trunk/readme.txt : dist/turtle-template-form-knitter/readme.txt
 	cp $? $@
 
+$(mSvnLocal)/trunk/turtle-template-form-knitter.php : dist/turtle-template-form-knitter/turtle-template-form-knitter.php
+	cp $? $@

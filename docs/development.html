@@ -11,7 +11,7 @@
   <hr />
   <h1 id="turtle-template-form-knitter-development">Turtle Template Form
   Knitter Development</h1>
-  <p>ver-1.0.7</p>
+  <p>ver-1.0.10</p>
   <p>First fork the <a href=
   "https://turtleengr.github.io/WP-turtle-template-form-knitter/">https://turtleengr.github.io/WP-turtle-template-form-knitter/</a>
   repository.</p>
@@ -89,39 +89,43 @@ mPubDev = /rel/development/$(mProj)
 mPubRel = /rel/released/$(mProj)
 </code></pre>
   <h3 id="build-steps">Build steps</h3>
-  <h4>=make=</h4>
+  <h4>make</h4>
   <ul>
     <li>This will verify the required packages and files exist.</li>
     <li>Then it will list the main steps to make and deploy the plugin.</li>
   </ul>
-  <h4>=make update=</h4>
+  <h4>make update</h4>
   <ul>
     <li>Pull the latest develop branch from github</li>
   </ul>
-  <h4>=make build=</h4>
+  <h4>make build</h4>
+  <p>First create a branch, if there are major changes</p>
   <ul>
-    <li>Create a branch, if there are major changes</li>
     <li>Build the zip file in the dist/ dir</li>
     <li>Change files and repeat until it is worth saving</li>
   </ul>
-  <h4>=make save=</h4>
+  <h4>make save</h4>
+  <p>First increment the minor or patch version: ("make incMinor", or "make
+  incPatch")</p>
+  <p>Run "make build" before this.</p>
   <ul>
     <li>Save a development version for testing.</li>
     <li>Checkin all changes, push to github</li>
     <li>Publish to the release server (change mServer to your release
     server).</li>
   </ul>
-  <h4>=make publish=</h4>
+  <h4>make publish</h4>
+  <p>This can only be done on the develop branch (i.e. merged branches).</p>
+  <p>Do this after the make build and save steps.</p>
   <ul>
-    <li>This can only be done on the develop branch (i.e. merged
-    branches)</li>
-    <li>Save a stable (tested) development version</li>
-    <li>Tag the version, push to develop</li>
-    <li>Merge develop to main</li>
+    <li>Save a stable (tested) development version to a "release" location
+    (local or remote).</li>
+    <li>Tag the version, push to develop.</li>
+    <li>Merge develop to main.</li>
   </ul>
-  <h4>=make release=</h4>
+  <h4>make release</h4>
+  <p>If accepted by WordPress.org</p>
   <ul>
-    <li>if accepted by WordPress.org TBD</li>
     <li>copy the relevant files to SVN…</li>
   </ul>
   <hr />

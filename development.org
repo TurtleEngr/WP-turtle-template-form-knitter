@@ -83,31 +83,36 @@ mPubRel = /rel/released/$(mProj)
 
 *** Build steps
 
-**** =make=
+**** make
 + This will verify the required packages and files exist.
 + Then it will list the main steps to make and deploy the plugin.
 
-**** =make update=
+**** make update
 + Pull the latest develop branch from github
 
-**** =make build=
-+ Create a branch, if there are major changes
+**** make build
+- First create a branch, if there are major changes
 + Build the zip file in the dist/ dir
 + Change files and repeat until it is worth saving
 
-**** =make save=
+**** make save
+- First increment the minor or patch version: ("make incMinor", or
+  "make incPatch")
+- Run "make build" before this.
 + Save a development version for testing.
 + Checkin all changes, push to github
 + Publish to the release server (change mServer to your release server).
 
-**** =make publish=
-+ This can only be done on the develop branch (i.e. merged branches)
-+ Save a stable (tested) development version
-+ Tag the version, push to develop
-+ Merge develop to main
+**** make publish
+- This can only be done on the develop branch (i.e. merged branches).
+- Do this after the make build and save steps.
++ Save a stable (tested) development version to a "release" location
+  (local or remote).
++ Tag the version, push to develop.
++ Merge develop to main.
 
-**** =make release=
-+ if accepted by WordPress.org TBD
+**** make release
+- If accepted by WordPress.org
 + copy the relevant files to SVN...
 
 ** How it works

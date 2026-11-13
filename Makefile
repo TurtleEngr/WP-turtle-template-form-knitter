@@ -49,7 +49,7 @@ usage : verify
 	@echo "    copy to $(mPubDev)"
 	@echo "publish - tag, ci, push to develop, merge to main, push to main"
 	@echo "    copy to $(mPubRel)"
-	@echo "release - TBD"
+	@echo "release-help - get details for public release."
 	@echo
 	@echo '===================='
 	@echo "VERSION: $$(cat VERSION)"
